@@ -19,17 +19,6 @@ class Admin extends Person{
         super(Uname, pwd);
     }
     
-    public int isValid(){
-        int valid = 0;
-        if(getUname().equals("admin")&&getPwd().equals("admin123")){
-            AdminPage ap = new AdminPage();
-            ap.setVisible(true);
-            valid = 1;
-        }else{
-            valid = 0;
-        }
-        return valid;
-    }
     
     public String getUname() {
         return Uname;
