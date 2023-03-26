@@ -223,10 +223,15 @@ public class login extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String uname =UsernameField.getText().trim();
         String password = jPasswordField1.getText().trim();
-        Student st = new Student(uname,password);
-        Admin ad = new Admin(uname, password);
-        if(ad.isValid()==0){
-            
+        Person d = new Person(uname, password);
+        if(d.isValid()==0){
+            JOptionPane.showMessageDialog(null,"Incorrect Username or Password!!");
+        }else if(d.isValid()==1){
+            Register rg = new Register();
+            rg.setVisible(true);
+        }else if(d.isValid()==2){
+            AdminPage ap = new AdminPage();
+            ap.setVisible(true);
         }
         
     }//GEN-LAST:event_loginBtnActionPerformed
@@ -239,7 +244,7 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_registerTxtMouseEntered
 
     private void registerTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerTxtMouseExited
-       Font f = registerTxt.getFont();
+        Font f = registerTxt.getFont();
         Map style = f.getAttributes();
         style.put(TextAttribute.UNDERLINE,-1);
         registerTxt.setFont(f.deriveFont(style));
