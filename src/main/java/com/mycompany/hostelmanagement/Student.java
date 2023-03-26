@@ -28,28 +28,6 @@ class Student extends Person {
         super(Uname,pwd);
     }
     
-    public int isValid(){
-        int valid = 0;
-        File f = new File("Account");
-        try {
-            Scanner s = new Scanner(f);
-            while(s.hasNextLine()){
-                String data = s.nextLine();
-                String[] datalist = data.split(",");
-                if(getUname().equals(datalist[0])&& getPwd().equals(datalist[1])){
-                    Register rg = new Register();
-                    rg.setVisible(true);
-                    valid = 1;
-                }else{
-                    valid = 0;
-                    break;
-                }
-            }  
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return valid;
-    }
     
     public String getUname() {
         return Uname;
