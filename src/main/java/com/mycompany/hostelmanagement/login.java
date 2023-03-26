@@ -221,24 +221,14 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        /*String uname =Username.getText().trim();
-        String password = psw.getText().trim();
+        String uname =UsernameField.getText().trim();
+        String password = jPasswordField1.getText().trim();
+        Student st = new Student(uname,password);
+        Admin ad = new Admin(uname, password);
+        if(ad.isValid()==0){
+            
+        }
         
-        File f = new File("testVector");
-        try {
-            Scanner s = new Scanner(f);
-            while(s.hasNextLine()){
-                String data = s.nextLine();
-                String[] datalist = data.split(",");
-                if(uname.equals(datalist[0])&& password.equals(datalist[1])){
-
-                    homepage hp = new homepage();
-                    hp.setVisible(true);
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerTxtMouseEntered
