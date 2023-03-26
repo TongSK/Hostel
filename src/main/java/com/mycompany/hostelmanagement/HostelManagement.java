@@ -9,9 +9,10 @@ package com.mycompany.hostelmanagement;
  *
  * @author Asus
  */
-public class HostelMangement {
+public class HostelManagement {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        login lg = new login();
+        lg.setVisible(true);
     }
 }
