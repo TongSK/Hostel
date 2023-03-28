@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Asus
  */
- class Person {
+ abstract class Person {
     protected String Uname;
     protected String pwd;
     protected String studentName;
@@ -58,6 +58,9 @@ import javax.swing.JOptionPane;
         return valid;
         
     }
+    
+    public abstract int register();
+    
     public String getUname() {
         return Uname;
     }
