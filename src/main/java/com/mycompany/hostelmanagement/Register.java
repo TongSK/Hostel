@@ -257,6 +257,7 @@ public class Register extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
@@ -267,6 +268,9 @@ public class Register extends javax.swing.JFrame {
         String name = NameField.getText();
         String contact = ContactField.getText();
         Student st = new Student(uname,pwd,name,dob,contact,email);
+        if(uname.isEmpty()||email.isEmpty()||pwd.isEmpty()||name.isEmpty()||contact.isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please fill in all the blank!");
+        }
     }//GEN-LAST:event_signupBtnActionPerformed
 
     private void loginTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginTxtMouseClicked
