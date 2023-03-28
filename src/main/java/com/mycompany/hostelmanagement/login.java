@@ -223,15 +223,21 @@ public class login extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String uname =UsernameField.getText().trim();
         String password = jPasswordField1.getText().trim();
-        Person d = new Person(uname, password);
-        if(d.isValid()==0){
-            JOptionPane.showMessageDialog(null,"Incorrect Username or Password!!");
-        }else if(d.isValid()==1){
-            Register rg = new Register();
-            rg.setVisible(true);
-        }else if(d.isValid()==2){
-            AdminPage ap = new AdminPage();
-            ap.setVisible(true);
+        Student d = new Student(uname,password);
+        switch (d.isValid()) {
+            case 0:
+                JOptionPane.showMessageDialog(null,"Incorrect Username or Password!!");
+                break;
+            case 1:
+                Register rg = new Register();
+                rg.setVisible(true);
+                break;
+            case 2:
+                AdminPage ap = new AdminPage();
+                ap.setVisible(true);
+                break;
+            default:
+                break;
         }
         
     }//GEN-LAST:event_loginBtnActionPerformed
@@ -255,7 +261,7 @@ public class login extends javax.swing.JFrame {
         rs.setVisible(true);
     }//GEN-LAST:event_registerTxtMouseClicked
     
-    private void onFocus(JLabel labelname, JTextField fieldName){
+    public static void onFocus(JLabel labelname, JTextField fieldName){
         fieldName.addFocusListener(new FocusListener(){
             @Override
             public void focusGained(FocusEvent e) {
