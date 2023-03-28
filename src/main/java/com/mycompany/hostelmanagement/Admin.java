@@ -19,6 +19,9 @@ class Admin extends Person{
         super(Uname, pwd);
     }
     
+    public int register(){
+        return 0;      
+    };
     
     public String getUname() {
         return Uname;
