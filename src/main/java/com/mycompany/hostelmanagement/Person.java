@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
     protected String Uname;
     protected String pwd;
     protected String studentName;
-    protected Date dob;
     protected String contractNum;
     protected String email; 
     
@@ -40,14 +39,14 @@ import javax.swing.JOptionPane;
                 String[] datalist = data.split(","); 
                 
                 if(getUname().equals(datalist[0])&& getPwd().equals(datalist[1])){                  
-                    valid += 1;
-                
+                    valid = 1;
+                    break;
                 }else if(getUname().equals("admin")&&getPwd().equals("admin123")){               
-                    valid += 2;
-          
+                    valid = 2;
+                    break;
                 }else{
-                    valid += 0;
-    
+                    valid = 0;
+                    break;
                 }
             }
             
