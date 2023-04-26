@@ -230,12 +230,15 @@ public class login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Incorrect Username or Password!!");
                 break;
             case 1:
-                Register rg = new Register();
-                rg.setVisible(true);
+                /*
+                User Main page
+                */
+                this.dispose();
                 break;
             case 2:
                 AdminPage ap = new AdminPage();
                 ap.setVisible(true);
+                this.dispose();
                 break;
             default:
                 break;
@@ -260,6 +263,7 @@ public class login extends javax.swing.JFrame {
     private void registerTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerTxtMouseClicked
         Register rs = new Register();
         rs.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_registerTxtMouseClicked
     
     public static void onFocus(JLabel labelname, JTextField fieldName){
