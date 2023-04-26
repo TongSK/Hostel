@@ -6,7 +6,7 @@ package com.mycompany.hostelmanagement;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Date;
+
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,10 +17,9 @@ import java.util.logging.Logger;
  */
 class Student extends Person {
 
-    public Student(String Uname, String pwd, String sName, Date DOB, String cNum, String mail) {
+    public Student(String Uname, String pwd, String sName,  String cNum, String mail) {
         super(Uname, pwd);
         studentName = sName;
-        dob = DOB;
         contractNum = cNum;
         email = mail;
     }
@@ -32,22 +31,24 @@ class Student extends Person {
     public int register(){
         File f = new File("Account");
         Scanner s;
+        int res = 0;
         try {
             s = new Scanner(f);
             while(s.hasNextLine()){
             String data = s.nextLine();
             String[] datalist = data.split(",");
             if(getUname().equals(datalist[0]) || getUname().equals("admin")){
-                return 0;
+                res = 0;
+                break;
             }else{
-                return 1;
+                res = 1;
             }
         }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return 0;
+        return res;
     }
     
     public String getUname() {
@@ -60,10 +61,6 @@ class Student extends Person {
 
     public String getStudentName() {
         return studentName;
-    }
-
-    public Date getDob() {
-        return dob;
     }
 
     public String getContractNum() {
