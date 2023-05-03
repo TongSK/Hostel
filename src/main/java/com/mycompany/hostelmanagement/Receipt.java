@@ -210,6 +210,7 @@ public class Receipt extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void receiptOKBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiptOKBtnActionPerformed
