@@ -4,6 +4,10 @@
  */
 package com.mycompany.hostelmanagement;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Tan Zhong
@@ -15,6 +19,8 @@ public class HostelApplication extends javax.swing.JFrame {
      */
     public HostelApplication() {
         initComponents();
+        displayTable();
+        
     }
 
     /**
@@ -28,30 +34,32 @@ public class HostelApplication extends javax.swing.JFrame {
 
         HA_lab1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        HA_table1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        HA_table = new javax.swing.JTable();
+        bookBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Hostel");
 
         HA_lab1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         HA_lab1.setText("Hostel");
 
-        HA_table1.setModel(new javax.swing.table.DefaultTableModel(
+        HA_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Room ID", "Type", "Price", "Availability", "Description"
+                "Room ID", "Type", "Description", "Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -62,13 +70,20 @@ public class HostelApplication extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        HA_table1.setShowGrid(true);
-        jScrollPane1.setViewportView(HA_table1);
+        HA_table.setShowGrid(true);
+        jScrollPane1.setViewportView(HA_table);
 
-        jButton1.setLabel("Book a Room");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bookBtn.setLabel("Book a Room");
+        bookBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bookBtnActionPerformed(evt);
+            }
+        });
+
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -76,19 +91,19 @@ public class HostelApplication extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(291, Short.MAX_VALUE)
+                .addComponent(HA_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(302, 302, 302))
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(HA_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(302, 302, 302))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(401, 401, 401)
+                        .addComponent(bookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,16 +113,49 @@ public class HostelApplication extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void displayTable(){
+        hostel h = new hostel(null,null,null,null,0,null,null);
+        ArrayList<String> tmp = h.mainFunc("Room.txt","r");
+        DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
+        table.setRowCount(0);
+        for(int i=0; i<tmp.size(); i++){
+            String rDetails = tmp.get(i);
+            String[] rData = rDetails.split(",");
+            table.addRow(new Object[]{rData[0],rData[2],rData[3],rData[4]});
+        }
+        HA_table.getColumnModel().getColumn(0).setPreferredWidth(10);
+        HA_table.getColumnModel().getColumn(1).setPreferredWidth(10);
+        HA_table.getColumnModel().getColumn(2).setPreferredWidth(270);
+        HA_table.getColumnModel().getColumn(3).setPreferredWidth(10);
+    }
+    
+    private void bookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        final int column = 0;
+        int row = HA_table.getSelectedRow();
+        String roomID_Selected = HA_table.getModel().getValueAt(row, column).toString();
+        
+        RoomReservation rr = new RoomReservation(roomID_Selected);
+        rr.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bookBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        // TODO add your handling code here:
+        StudentPanel sp = new StudentPanel();
+        sp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,8 +194,9 @@ public class HostelApplication extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel HA_lab1;
-    private javax.swing.JTable HA_table1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTable HA_table;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton bookBtn;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
