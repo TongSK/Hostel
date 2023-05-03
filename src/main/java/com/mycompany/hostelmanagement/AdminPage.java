@@ -546,9 +546,9 @@ public class AdminPage extends javax.swing.JFrame {
             String owner = ownerField.getText();
             try {
                 hostel h = new hostel(roomID,roomName,roomType,desc,price,availability,owner);
-                ArrayList<String> tmp = h.mainFunc("room.txt", "w");
+                ArrayList<String> tmp = h.mainFunc("Room.txt", "w");
                 
-                PrintWriter w = new PrintWriter("room.txt");
+                PrintWriter w = new PrintWriter("Room.txt");
                 for(String editData : tmp){
                     w.println(editData);
                 }
@@ -599,12 +599,12 @@ public class AdminPage extends javax.swing.JFrame {
             String owner = ownerField.getText();
             try {
                 hostel h = new hostel(roomID,roomName,roomType,desc,price,availability,owner);
-                ArrayList<String> tmp = h.mainFunc("room.txt", "a");
+                ArrayList<String> tmp = h.mainFunc("Room.txt", "a");
                 if(tmp.isEmpty()){
                     JOptionPane.showMessageDialog(this, "This Room ID is invalid please enter again!!","Error Message",JOptionPane.ERROR_MESSAGE);
                     rIDfield.setText("");
                 }else{
-                    FileWriter w = new FileWriter("room.txt",true);
+                    FileWriter w = new FileWriter("Room.txt",true);
                     for(String data: tmp){
                         w.write(data+System.lineSeparator());
                     }
@@ -632,9 +632,9 @@ public class AdminPage extends javax.swing.JFrame {
 
     private void hiDelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hiDelBtnActionPerformed
         hostel h = new hostel(rIDfield.getText(),rNameField.getText(),rTypeField.getText(),desTextArea.getText(),Double.parseDouble(priceField.getText()), (String) availBox.getSelectedItem(),ownerField.getText());
-        ArrayList<String> tmp = h.mainFunc("room.txt", "d");
+        ArrayList<String> tmp = h.mainFunc("Room.txt", "d");
         try {
-            FileWriter w = new FileWriter("room.txt");
+            FileWriter w = new FileWriter("Room.txt");
             w.write("");
             
             for(int i =0; i<tmp.size(); i++){
@@ -668,7 +668,7 @@ public class AdminPage extends javax.swing.JFrame {
     
     public void displyRDataFunc(){
         hostel h = new hostel(null,null,null,null,0,null,null);
-        ArrayList<String> tmp = h.mainFunc("room.txt","r");
+        ArrayList<String> tmp = h.mainFunc("Room.txt","r");
         h.displyData(tmp, hiTable);
     }
     /**
