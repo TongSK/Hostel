@@ -5,23 +5,28 @@
 package com.mycompany.hostelmanagement;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Tan Zhong
  */
 public class RoomReservation extends javax.swing.JFrame {
-
+    
+    public static String username;
+    public static String roomID;
     /**
      * Creates new form RoomReservation
      */
-    public RoomReservation(String roomID) {
+    public RoomReservation(String userName, String roomID) {
         initComponents();
         displayBookingDetails(roomID);
+        RoomReservation.username = userName;
         RoomReservation.roomID = roomID;
+        userLab2.setText(username);
     }
     
-    public static String roomID;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,6 +50,8 @@ public class RoomReservation extends javax.swing.JFrame {
         rrPriceLab2 = new javax.swing.JLabel();
         rrBackBtn = new javax.swing.JButton();
         rrPayBtn = new javax.swing.JButton();
+        userLab1 = new javax.swing.JLabel();
+        userLab2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Room Reservation");
@@ -139,6 +146,10 @@ public class RoomReservation extends javax.swing.JFrame {
             }
         });
 
+        userLab1.setText("User:");
+
+        userLab2.setText("User001");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,13 +165,23 @@ public class RoomReservation extends javax.swing.JFrame {
                             .addComponent(rrPayBtn))
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(userLab1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userLab2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userLab2)
+                    .addComponent(userLab1))
+                .addGap(5, 5, 5)
                 .addComponent(rrLab1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -190,10 +211,27 @@ public class RoomReservation extends javax.swing.JFrame {
     
     private void rrBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrBackBtnActionPerformed
         // TODO add your handling code here:
+        HostelApplication ha = new HostelApplication(username);
+        ha.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_rrBackBtnActionPerformed
 
     private void rrPayBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrPayBtnActionPerformed
         // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog
+                (this, "Are you sure you want to proceed to payment?", 
+                "Confirm!",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(response == JOptionPane.YES_OPTION)
+        {
+            String roomID = rrRoomIDLab2.getText();
+            String roomType = rrRoomTypeLab2.getText();
+            String price = rrPriceLab2.getText();
+            String period = rrCombo1.getSelectedItem().toString();  
+            
+            Payment p = new Payment(roomID, roomType, price, period, username);
+            p.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_rrPayBtnActionPerformed
 
     /**
@@ -226,7 +264,7 @@ public class RoomReservation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RoomReservation(roomID).setVisible(true);
+                new RoomReservation(username, roomID).setVisible(true);
             }
         });
     }
@@ -245,5 +283,7 @@ public class RoomReservation extends javax.swing.JFrame {
     private javax.swing.JLabel rrRoomIDLab2;
     private javax.swing.JLabel rrRoomTypeLab1;
     private javax.swing.JLabel rrRoomTypeLab2;
+    private javax.swing.JLabel userLab1;
+    private javax.swing.JLabel userLab2;
     // End of variables declaration//GEN-END:variables
 }
