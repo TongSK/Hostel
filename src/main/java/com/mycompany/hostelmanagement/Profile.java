@@ -10,11 +10,13 @@ package com.mycompany.hostelmanagement;
  */
 public class Profile extends javax.swing.JFrame {
 
+    public static String username;
     /**
      * Creates new form Profile
      */
-    public Profile() {
+    public Profile(String userName) {
         initComponents();
+        Profile.username = userName;
     }
 
     /**
@@ -185,6 +187,7 @@ public class Profile extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void profileOKBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileOKBtnActionPerformed
@@ -221,7 +224,7 @@ public class Profile extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Profile().setVisible(true);
+                new Profile(username).setVisible(true);
             }
         });
     }
