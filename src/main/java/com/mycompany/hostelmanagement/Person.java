@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
 
     public int isValid(){
         int valid = 0; 
-        File f = new File("Account");
+        File f = new File("Account.txt");
         try {
             Scanner s = new Scanner(f);
             while(s.hasNextLine()){
@@ -46,7 +46,7 @@ import javax.swing.JOptionPane;
                     break;
                 }else{
                     valid = 0;
-                    break;
+                    
                 }
             }
             
