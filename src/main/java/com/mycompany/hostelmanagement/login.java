@@ -233,6 +233,7 @@ public class login extends javax.swing.JFrame {
                 StudentPanel sp = new StudentPanel();
                 sp.setVisible(true);
                 this.dispose();
+                JOptionPane.showMessageDialog(null,"Login Success!!");
                 break;
             case 2:
                 AdminPage ap = new AdminPage();
