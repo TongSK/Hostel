@@ -14,13 +14,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HostelApplication extends javax.swing.JFrame {
 
+    public static String username;
+    
     /**
      * Creates new form HostelApplication
      */
-    public HostelApplication() {
+    public HostelApplication(String userName) {
         initComponents();
         displayTable();
-        
+        HostelApplication.username = userName;
+        userLab2.setText(username);
     }
 
     /**
@@ -37,6 +40,8 @@ public class HostelApplication extends javax.swing.JFrame {
         HA_table = new javax.swing.JTable();
         bookBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
+        userLab1 = new javax.swing.JLabel();
+        userLab2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hostel");
@@ -87,12 +92,20 @@ public class HostelApplication extends javax.swing.JFrame {
             }
         });
 
+        userLab1.setText("User:");
+
+        userLab2.setText("User001");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(291, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(userLab1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userLab2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86)
                 .addComponent(HA_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(302, 302, 302))
             .addGroup(layout.createSequentialGroup()
@@ -108,8 +121,15 @@ public class HostelApplication extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(HA_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(HA_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(userLab1)
+                            .addComponent(userLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -145,14 +165,14 @@ public class HostelApplication extends javax.swing.JFrame {
         int row = HA_table.getSelectedRow();
         String roomID_Selected = HA_table.getModel().getValueAt(row, column).toString();
         
-        RoomReservation rr = new RoomReservation(roomID_Selected);
+        RoomReservation rr = new RoomReservation(username,roomID_Selected);
         rr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_bookBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        StudentPanel sp = new StudentPanel();
+        StudentPanel sp = new StudentPanel(username);
         sp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
@@ -187,7 +207,7 @@ public class HostelApplication extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HostelApplication().setVisible(true);
+                new HostelApplication(username).setVisible(true);
             }
         });
     }
@@ -198,5 +218,7 @@ public class HostelApplication extends javax.swing.JFrame {
     private javax.swing.JButton backBtn;
     private javax.swing.JButton bookBtn;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel userLab1;
+    private javax.swing.JLabel userLab2;
     // End of variables declaration//GEN-END:variables
 }
