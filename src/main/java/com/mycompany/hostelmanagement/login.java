@@ -230,7 +230,7 @@ public class login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Incorrect Username or Password!!");
                 break;
             case 1:
-                StudentPanel sp = new StudentPanel();
+                StudentPanel sp = new StudentPanel(uname);
                 sp.setVisible(true);
                 this.dispose();
                 JOptionPane.showMessageDialog(null,"Login Success!!");
