@@ -33,6 +33,7 @@ public class StudentPanel extends javax.swing.JFrame {
         SP_profileBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Student Panel");
 
         SP_lab1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         SP_lab1.setText("Welcome To");
@@ -48,8 +49,18 @@ public class StudentPanel extends javax.swing.JFrame {
         });
 
         SP_hostelBtn.setText("Hostel");
+        SP_hostelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SP_hostelBtnActionPerformed(evt);
+            }
+        });
 
         SP_profileBtn.setText("Profile");
+        SP_profileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SP_profileBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,11 +101,29 @@ public class StudentPanel extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void SP_logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_logoutBtnActionPerformed
         // TODO add your handling code here:
+        login l = new login();
+        l.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_SP_logoutBtnActionPerformed
+
+    private void SP_hostelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_hostelBtnActionPerformed
+        // TODO add your handling code here:
+        HostelApplication ha = new HostelApplication();
+        ha.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SP_hostelBtnActionPerformed
+
+    private void SP_profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_profileBtnActionPerformed
+        // TODO add your handling code here:
+        Profile p = new Profile();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SP_profileBtnActionPerformed
 
     /**
      * @param args the command line arguments

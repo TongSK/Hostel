@@ -4,6 +4,8 @@
  */
 package com.mycompany.hostelmanagement;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Tan Zhong
@@ -13,9 +15,13 @@ public class RoomReservation extends javax.swing.JFrame {
     /**
      * Creates new form RoomReservation
      */
-    public RoomReservation() {
+    public RoomReservation(String roomID) {
         initComponents();
+        displayBookingDetails(roomID);
+        RoomReservation.roomID = roomID;
     }
+    
+    public static String roomID;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,6 +47,7 @@ public class RoomReservation extends javax.swing.JFrame {
         rrPayBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Room Reservation");
 
         rrLab1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         rrLab1.setText("Please confirm your booking here");
@@ -163,8 +170,24 @@ public class RoomReservation extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void displayBookingDetails(String roomSelected){
+        hostel h = new hostel(null,null,null,null,0,null,null);
+        ArrayList<String> tmp = h.mainFunc("Room.txt","r");
+        for(int i=0; i<tmp.size(); i++){
+            String rDetails = tmp.get(i);
+            String[] rData = rDetails.split(",");
+            
+            if(rData[0].equals(roomSelected)){
+                rrRoomIDLab2.setText(rData[0]);
+                rrRoomTypeLab2.setText(rData[2]);
+                rrPriceLab2.setText("RM "+rData[4]);
+            }
+        }
+    }
+    
     private void rrBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrBackBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rrBackBtnActionPerformed
@@ -203,7 +226,7 @@ public class RoomReservation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RoomReservation().setVisible(true);
+                new RoomReservation(roomID).setVisible(true);
             }
         });
     }

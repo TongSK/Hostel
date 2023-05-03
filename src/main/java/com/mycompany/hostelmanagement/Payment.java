@@ -42,6 +42,7 @@ public class Payment extends javax.swing.JFrame {
         paymentEDTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Payment");
 
         paymentLab1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         paymentLab1.setText("Payment");
@@ -177,6 +178,7 @@ public class Payment extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void paymentConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentConfirmBtnActionPerformed
