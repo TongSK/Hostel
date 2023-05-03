@@ -29,7 +29,7 @@ class Student extends Person {
     
     @Override
     public int register(){
-        File f = new File("Account");
+        File f = new File("Account.txt");
         Scanner s;
         int res = 0;
         try {
