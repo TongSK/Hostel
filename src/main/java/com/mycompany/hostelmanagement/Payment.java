@@ -4,17 +4,31 @@
  */
 package com.mycompany.hostelmanagement;
 
+import java.awt.Color;
+
 /**
  *
  * @author Tan Zhong
  */
 public class Payment extends javax.swing.JFrame {
 
+    public static String roomID_Selected;
+    public static String roomType_Selected;
+    public static String fee;
+    public static String length_renting;
+    public static String username;
+    
     /**
      * Creates new form Payment
      */
-    public Payment() {
+    public Payment(String roomID_Selected, String roomType_Selected, String fee, String length_renting, String userName) {
         initComponents();
+        Payment.roomID_Selected = roomID_Selected;
+        Payment.roomType_Selected = roomType_Selected;
+        Payment.fee = fee;
+        Payment.length_renting = length_renting;
+        Payment.username = userName;
+        userLab2.setText(username);
     }
 
     /**
@@ -40,6 +54,9 @@ public class Payment extends javax.swing.JFrame {
         paymentCVVtxt = new javax.swing.JPasswordField();
         paymentCNTxt = new javax.swing.JTextField();
         paymentEDTxt = new javax.swing.JTextField();
+        userLab1 = new javax.swing.JLabel();
+        userLab2 = new javax.swing.JLabel();
+        backBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Payment");
@@ -98,22 +115,65 @@ public class Payment extends javax.swing.JFrame {
         });
 
         paymentNameTxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        paymentNameTxt.setForeground(new java.awt.Color(204, 204, 204));
         paymentNameTxt.setText("Student Name");
         paymentNameTxt.setToolTipText("Thomas Tan");
+        paymentNameTxt.setActionCommand("<Not Set>");
+        paymentNameTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                paymentNameTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                paymentNameTxtFocusLost(evt);
+            }
+        });
 
+        paymentCVVtxt.setForeground(new java.awt.Color(204, 204, 204));
         paymentCVVtxt.setText("123");
         paymentCVVtxt.setToolTipText("123");
+        paymentCVVtxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                paymentCVVtxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                paymentCVVtxtFocusLost(evt);
+            }
+        });
 
         paymentCNTxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        paymentCNTxt.setForeground(new java.awt.Color(204, 204, 204));
         paymentCNTxt.setText("xxxx-xxxx-xxxx-xxxx");
         paymentCNTxt.setToolTipText("xxxx-xxxx-xxxx-xxxx");
+        paymentCNTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                paymentCNTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                paymentCNTxtFocusLost(evt);
+            }
+        });
 
         paymentEDTxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        paymentEDTxt.setForeground(new java.awt.Color(204, 204, 204));
         paymentEDTxt.setText("01/24");
         paymentEDTxt.setToolTipText("mm/YY");
-        paymentEDTxt.addActionListener(new java.awt.event.ActionListener() {
+        paymentEDTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                paymentEDTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                paymentEDTxtFocusLost(evt);
+            }
+        });
+
+        userLab1.setText("User:");
+
+        userLab2.setText("User001");
+
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paymentEDTxtActionPerformed(evt);
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -139,20 +199,32 @@ public class Payment extends javax.swing.JFrame {
                                     .addComponent(paymentNameTxt, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(paymentCNTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
                                     .addComponent(paymentCVVtxt)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(paymentConfirmBtn)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(backBtn)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(paymentConfirmBtn))
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
+                        .addGap(7, 7, 7)
+                        .addComponent(userLab1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(userLab2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(143, 143, 143)
                         .addComponent(paymentLab1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userLab2)
+                    .addComponent(userLab1))
+                .addGap(3, 3, 3)
                 .addComponent(paymentLab1)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PaymentLab2)
@@ -172,8 +244,10 @@ public class Payment extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(paymentCVVLab)
                     .addComponent(paymentCVVtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(paymentConfirmBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paymentConfirmBtn)
+                    .addComponent(backBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -181,13 +255,89 @@ public class Payment extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void displayFee(){
+        paymentTotalLab2.setText(fee);
+    }
+    
     private void paymentConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentConfirmBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_paymentConfirmBtnActionPerformed
 
-    private void paymentEDTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentEDTxtActionPerformed
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_paymentEDTxtActionPerformed
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    //Remove placeholder
+    private void paymentNameTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentNameTxtFocusGained
+        // TODO add your handling code here:
+        if(paymentNameTxt.getText().equals("Student Name")){
+            paymentNameTxt.setText("");
+            paymentNameTxt.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_paymentNameTxtFocusGained
+
+    //Display placeholder
+    private void paymentNameTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentNameTxtFocusLost
+        // TODO add your handling code here:
+        if(paymentNameTxt.getText().isEmpty()){
+            paymentNameTxt.setText("Student Name");
+            paymentNameTxt.setForeground(Color.lightGray);
+        }
+    }//GEN-LAST:event_paymentNameTxtFocusLost
+
+    //Remove placeholder
+    private void paymentCNTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentCNTxtFocusGained
+        // TODO add your handling code here:
+        if(paymentCNTxt.getText().equals("xxxx-xxxx-xxxx-xxxx")){
+            paymentCNTxt.setText("");
+            paymentCNTxt.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_paymentCNTxtFocusGained
+
+    //Display placeholder
+    private void paymentCNTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentCNTxtFocusLost
+        // TODO add your handling code here:
+        if(paymentCNTxt.getText().isEmpty()){
+            paymentCNTxt.setText("xxxx-xxxx-xxxx-xxxx");
+            paymentCNTxt.setForeground(Color.lightGray);
+        }
+    }//GEN-LAST:event_paymentCNTxtFocusLost
+
+    //Remove placeholder
+    private void paymentEDTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentEDTxtFocusGained
+        // TODO add your handling code here:
+        if(paymentEDTxt.getText().equals("01/24")){
+            paymentEDTxt.setText("");
+            paymentEDTxt.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_paymentEDTxtFocusGained
+
+    //Display placeholder
+    private void paymentEDTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentEDTxtFocusLost
+        // TODO add your handling code here:
+        if(paymentEDTxt.getText().isEmpty()){
+            paymentEDTxt.setText("01/24");
+            paymentEDTxt.setForeground(Color.lightGray);
+        }
+    }//GEN-LAST:event_paymentEDTxtFocusLost
+
+    //Remove placeholder
+    private void paymentCVVtxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentCVVtxtFocusGained
+        // TODO add your handling code here:
+        if(paymentCVVtxt.getText().equals("123")){
+            paymentCVVtxt.setText("");
+            paymentCVVtxt.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_paymentCVVtxtFocusGained
+
+    //Display placeholder
+    private void paymentCVVtxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentCVVtxtFocusLost
+        // TODO add your handling code here:
+        if(paymentCVVtxt.getText().isEmpty()){
+            paymentCVVtxt.setText("123");
+            paymentCVVtxt.setForeground(Color.lightGray);
+        }
+    }//GEN-LAST:event_paymentCVVtxtFocusLost
 
     /**
      * @param args the command line arguments
@@ -219,13 +369,14 @@ public class Payment extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Payment().setVisible(true);
+                new Payment(roomID_Selected, roomType_Selected, fee, length_renting, username).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel PaymentLab2;
+    private javax.swing.JButton backBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel paymentCNLab;
     private javax.swing.JTextField paymentCNTxt;
@@ -239,5 +390,7 @@ public class Payment extends javax.swing.JFrame {
     private javax.swing.JTextField paymentNameTxt;
     private javax.swing.JLabel paymentTotalLab1;
     private javax.swing.JLabel paymentTotalLab2;
+    private javax.swing.JLabel userLab1;
+    private javax.swing.JLabel userLab2;
     // End of variables declaration//GEN-END:variables
 }
