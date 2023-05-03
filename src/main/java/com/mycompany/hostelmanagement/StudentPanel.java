@@ -10,11 +10,14 @@ package com.mycompany.hostelmanagement;
  */
 public class StudentPanel extends javax.swing.JFrame {
 
+    public static String username;
     /**
      * Creates new form StudentPanel
      */
-    public StudentPanel() {
+    public StudentPanel(String userName) {
+        StudentPanel.username = userName;
         initComponents();
+        userLab2.setText(username); 
     }
 
     /**
@@ -31,6 +34,8 @@ public class StudentPanel extends javax.swing.JFrame {
         SP_logoutBtn = new javax.swing.JButton();
         SP_hostelBtn = new javax.swing.JButton();
         SP_profileBtn = new javax.swing.JButton();
+        userLab1 = new javax.swing.JLabel();
+        userLab2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Student Panel");
@@ -62,32 +67,45 @@ public class StudentPanel extends javax.swing.JFrame {
             }
         });
 
+        userLab1.setText("User:");
+
+        userLab2.setText("User001");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(SP_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(115, 115, 115))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(userLab1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(SP_lab2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(SP_logoutBtn))
+                            .addComponent(userLab2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(SP_hostelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(SP_profileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(SP_lab2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SP_logoutBtn))
-                        .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(SP_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userLab1)
+                    .addComponent(userLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(SP_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SP_lab2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -104,6 +122,7 @@ public class StudentPanel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void SP_logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_logoutBtnActionPerformed
         // TODO add your handling code here:
         login l = new login();
@@ -113,14 +132,14 @@ public class StudentPanel extends javax.swing.JFrame {
 
     private void SP_hostelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_hostelBtnActionPerformed
         // TODO add your handling code here:
-        HostelApplication ha = new HostelApplication();
+        HostelApplication ha = new HostelApplication(username);
         ha.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SP_hostelBtnActionPerformed
 
     private void SP_profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_profileBtnActionPerformed
         // TODO add your handling code here:
-        Profile p = new Profile();
+        Profile p = new Profile(username);
         p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SP_profileBtnActionPerformed
@@ -155,7 +174,7 @@ public class StudentPanel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StudentPanel().setVisible(true);
+                new StudentPanel(username).setVisible(true);
             }
         });
     }
@@ -166,5 +185,7 @@ public class StudentPanel extends javax.swing.JFrame {
     private javax.swing.JLabel SP_lab2;
     private javax.swing.JButton SP_logoutBtn;
     private javax.swing.JButton SP_profileBtn;
+    private javax.swing.JLabel userLab1;
+    private javax.swing.JLabel userLab2;
     // End of variables declaration//GEN-END:variables
 }
