@@ -5,6 +5,7 @@
 package com.mycompany.hostelmanagement;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Payment extends javax.swing.JFrame {
         Payment.length_renting = length_renting;
         Payment.username = userName;
         userLab2.setText(username);
+        displayFee();
     }
 
     /**
@@ -259,12 +261,75 @@ public class Payment extends javax.swing.JFrame {
         paymentTotalLab2.setText(fee);
     }
     
+    //Validation for name of cardholder
+    private boolean validateName(String name){
+        //Name cannot be empty
+        if(name.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Cardholder name is required!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        //Name can only contains alphabets
+        if(!name.matches("[a-zA-Z ]+")){
+            JOptionPane.showMessageDialog(this, "Cardholder name only allows alphabets!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    //Validation for card
+    private boolean validateCard(String cardNo, String expiryDate, String cvv){
+        //The accepted format of card number is xxxx-xxxx-xxxx-xxxx
+        if (!cardNo.matches("\\d{4}-\\d{4}-\\d{4}-\\d{4}")) {
+            JOptionPane.showMessageDialog(this, "Invalid card number.\nPlease follow this format xxxx-xxxx-xxxx-xxxx.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        //The accepted format of date is MM/yy
+        if (!expiryDate.matches("\\d{2}/\\d{2}")) {
+            JOptionPane.showMessageDialog(this, "Invalid expiry date. Please follow this format mm/YY.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        //The accepted format of cvv is 3 digits
+        if (!cvv.matches("\\d{3}")) {
+            JOptionPane.showMessageDialog(this, "Invalid cvv. CVV is 3 digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+    
+    //When the payment button is clicked,
+    //It will check all the inputs
     private void paymentConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentConfirmBtnActionPerformed
         // TODO add your handling code here:
+        String cardHolder = paymentNameTxt.getText();
+        String cardNo = paymentCNTxt.getText();
+        String expiryDate = paymentEDTxt.getText();
+        String cvv = paymentCVVtxt.getText();
+        
+        boolean valid_name = validateName(cardHolder);
+        boolean valid_card = validateCard(cardNo, expiryDate, cvv);
+        
+        if(valid_name && valid_card){
+            int response = JOptionPane.showConfirmDialog
+                (this, "Are you sure you want to proceed to payment?", 
+                "Confirm!",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if(response == JOptionPane.YES_OPTION)
+            {
+                Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
+                r.setVisible(true);
+                this.dispose();
+            }
+        }
     }//GEN-LAST:event_paymentConfirmBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
+        RoomReservation rr = new RoomReservation(username, roomID_Selected);
+        rr.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
 
     //Remove placeholder
