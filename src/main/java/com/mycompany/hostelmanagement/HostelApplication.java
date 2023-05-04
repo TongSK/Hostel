@@ -153,7 +153,7 @@ public class HostelApplication extends javax.swing.JFrame {
             String rDetails = tmp.get(i);
             String[] rData = rDetails.split(",");
             if(rData[5].equals("available") && rData[6].equals("null")){
-                table.addRow(new Object[]{rData[0],rData[2],rData[3],rData[4]});
+                table.addRow(new Object[]{rData[0],rData[2],rData[3],"RM "+rData[4]});
             }
         }
         HA_table.getColumnModel().getColumn(0).setPreferredWidth(10);
