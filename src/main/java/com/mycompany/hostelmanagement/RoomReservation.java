@@ -71,7 +71,7 @@ public class RoomReservation extends javax.swing.JFrame {
         rrPriceLab1.setText("Price:");
 
         rrPeriodLab1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        rrPeriodLab1.setText("Period:");
+        rrPeriodLab1.setText("Duration:");
 
         rrLab2.setText("How long would you like to rent this room?");
 
@@ -225,10 +225,10 @@ public class RoomReservation extends javax.swing.JFrame {
         {
             String roomID = rrRoomIDLab2.getText();
             String roomType = rrRoomTypeLab2.getText();
-            String price = rrPriceLab2.getText();
-            String period = rrCombo1.getSelectedItem().toString();  
+            String price = rrPriceLab2.getText().substring(3);
+            String duration = rrCombo1.getSelectedItem().toString();  
             
-            Payment p = new Payment(roomID, roomType, price, period, username);
+            Payment p = new Payment(roomID, roomType, price, duration, username);
             p.setVisible(true);
             this.dispose();
         }
