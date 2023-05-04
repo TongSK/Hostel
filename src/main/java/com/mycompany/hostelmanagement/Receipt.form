@@ -46,10 +46,10 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="receiptLab2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="receiptPanel" min="-2" max="-2" attributes="0"/>
+              <Component id="receiptPanel" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="receiptOKBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -83,9 +83,11 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="receiptDateLab1" max="32767" attributes="0"/>
                       <Component id="receiptUserLab1" alignment="0" pref="143" max="32767" attributes="0"/>
                       <Component id="receiptNameLab1" alignment="0" max="32767" attributes="0"/>
                       <Component id="receiptEmailLab1" alignment="0" max="32767" attributes="0"/>
@@ -105,10 +107,10 @@
                       <Component id="receiptTypeLab2" alignment="0" max="32767" attributes="0"/>
                       <Component id="receiptPeriodLab2" pref="330" max="32767" attributes="0"/>
                       <Component id="receiptPriceLab2" max="32767" attributes="0"/>
+                      <Component id="receiptDateLab2" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="60" max="32767" attributes="0"/>
               </Group>
-              <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -137,6 +139,11 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="9" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="receiptDateLab1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="receiptDateLab2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="receiptRoomIDLab1" min="-2" max="-2" attributes="0"/>
                       <Component id="receiptRoomIDLab2" min="-2" max="-2" attributes="0"/>
@@ -156,7 +163,7 @@
                       <Component id="receiptPriceLab1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="receiptPriceLab2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -291,6 +298,22 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="RM1000"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="receiptDateLab1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Date:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="receiptDateLab2">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="04-05-2023"/>
           </Properties>
         </Component>
       </SubComponents>

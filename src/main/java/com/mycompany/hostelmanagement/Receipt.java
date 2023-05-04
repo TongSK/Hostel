@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -39,6 +40,7 @@ public class Receipt extends javax.swing.JFrame {
         Receipt.roomType = type;
         Receipt.duration = duration;
         Receipt.fee = fee;
+        displayDate();
         displayUserDetails();
         displayReservation();
         saveBookingRecord();
@@ -74,6 +76,8 @@ public class Receipt extends javax.swing.JFrame {
         receiptTypeLab2 = new javax.swing.JLabel();
         receiptPeriodLab2 = new javax.swing.JLabel();
         receiptPriceLab2 = new javax.swing.JLabel();
+        receiptDateLab1 = new javax.swing.JLabel();
+        receiptDateLab2 = new javax.swing.JLabel();
         receiptOKBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -136,13 +140,21 @@ public class Receipt extends javax.swing.JFrame {
         receiptPriceLab2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         receiptPriceLab2.setText("RM1000");
 
+        receiptDateLab1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        receiptDateLab1.setText("Date:");
+
+        receiptDateLab2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        receiptDateLab2.setText("04-05-2023");
+
         javax.swing.GroupLayout receiptPanelLayout = new javax.swing.GroupLayout(receiptPanel);
         receiptPanel.setLayout(receiptPanelLayout);
         receiptPanelLayout.setHorizontalGroup(
             receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
             .addGroup(receiptPanelLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(receiptDateLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptUserLab1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(receiptNameLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptEmailLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -160,9 +172,9 @@ public class Receipt extends javax.swing.JFrame {
                     .addComponent(receiptRoomIDLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptTypeLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptPeriodLab2, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
-                    .addComponent(receiptPriceLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(receiptPriceLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(receiptDateLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(60, Short.MAX_VALUE))
-            .addComponent(jSeparator1)
         );
         receiptPanelLayout.setVerticalGroup(
             receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,6 +198,10 @@ public class Receipt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(receiptDateLab1)
+                    .addComponent(receiptDateLab2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(receiptRoomIDLab1)
                     .addComponent(receiptRoomIDLab2))
@@ -201,7 +217,7 @@ public class Receipt extends javax.swing.JFrame {
                 .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(receiptPriceLab1)
                     .addComponent(receiptPriceLab2))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
 
         receiptOKBtn.setText("OK");
@@ -233,16 +249,17 @@ public class Receipt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(receiptLab2)
                 .addGap(18, 18, 18)
-                .addComponent(receiptPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(receiptPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(receiptOKBtn)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
     //Display the user details who booked the room
     private void displayUserDetails(){
         try(BufferedReader br = new BufferedReader(new FileReader("Account.txt"))){
@@ -267,6 +284,15 @@ public class Receipt extends javax.swing.JFrame {
         }
     }
     
+    //Display the date of room booked
+    private void displayDate(){
+        GregorianCalendar gc = new GregorianCalendar();
+        int year = gc.get(GregorianCalendar.YEAR);
+        int month = (gc.get(GregorianCalendar.MONTH)+1);
+        int day = gc.get(GregorianCalendar.DATE);
+        receiptDateLab2.setText(day+"-"+month+"-"+year);
+    }
+    
     //Display the details of the room booked
     private void displayReservation(){
         receiptRoomIDLab2.setText(roomID);
@@ -280,9 +306,10 @@ public class Receipt extends javax.swing.JFrame {
         String name = receiptNameLab2.getText();
         String mobile = receiptMobileLab2.getText();
         String email = receiptEmailLab2.getText();
+        String date = receiptDateLab2.getText();
         
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reservation.txt", true)))) {
-            writer.println(roomID+","+roomType+","+duration+","+fee+","+username+","+name+","+mobile+","+email);
+            writer.println(roomID+","+roomType+","+duration+","+fee+","+username+","+name+","+mobile+","+email+","+date);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Something wrong with writting file!", "Error Message", JOptionPane.ERROR_MESSAGE);
         }
@@ -370,6 +397,8 @@ public class Receipt extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel receiptDateLab1;
+    private javax.swing.JLabel receiptDateLab2;
     private javax.swing.JLabel receiptEmailLab1;
     private javax.swing.JLabel receiptEmailLab2;
     private javax.swing.JLabel receiptLab1;
