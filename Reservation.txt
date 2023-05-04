@@ -1,0 +1,3 @@
+S002,Small,1 Month,750,sk,Sheng Kit,0123456789,sk@mail.com
+S003,Small,12 Months,750,sk,Sheng Kit,0123456789,sk@mail.com
+S004,Small,1 Month,750.0,tt,Thomas Tan,0123456789,tt@mail.com
