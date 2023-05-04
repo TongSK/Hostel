@@ -143,6 +143,7 @@ public class HostelApplication extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Display the hostel information in a table
     private void displayTable(){
         hostel h = new hostel(null,null,null,null,0,null,null);
         ArrayList<String> tmp = h.mainFunc("Room.txt","r");
@@ -151,7 +152,9 @@ public class HostelApplication extends javax.swing.JFrame {
         for(int i=0; i<tmp.size(); i++){
             String rDetails = tmp.get(i);
             String[] rData = rDetails.split(",");
-            table.addRow(new Object[]{rData[0],rData[2],rData[3],rData[4]});
+            if(rData[5].equals("available") && rData[6].equals("null")){
+                table.addRow(new Object[]{rData[0],rData[2],rData[3],rData[4]});
+            }
         }
         HA_table.getColumnModel().getColumn(0).setPreferredWidth(10);
         HA_table.getColumnModel().getColumn(1).setPreferredWidth(10);
@@ -159,6 +162,7 @@ public class HostelApplication extends javax.swing.JFrame {
         HA_table.getColumnModel().getColumn(3).setPreferredWidth(10);
     }
     
+    //Book room button
     private void bookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBtnActionPerformed
         // TODO add your handling code here:
         final int column = 0;
