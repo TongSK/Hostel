@@ -1,4 +1,6 @@
-S001,Small Room1,Small,This is a small room for single,700,available,null
-M001,Medium Room1,Medium,This is a medium room for 1 to 2 person,900,available,null
-MS001,Master Room1,Master,This is a master room for 2 person,1200,available,null
-S002,Small Room2,Small,This is another small room for single,750,available,null
+S001,Small Room1,Small,This is a small room for single,700.0,available,null
+M001,Medium Room1,Medium,This is a medium room for 1 to 2 person,900.0,available,null
+MS001,Master Room1,Master,This is a master room for 2 person,1200.0,available,null
+S002,Small Room2,Small,This is another small room for single,750.0,booked,sk
+S003,Small Room3,Small,This is another small room for single,750.0,booked,sk
+S005,Small Room5,Small,This is another small room for single,750.0,available,null
