@@ -3,6 +3,7 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Receipt"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -85,8 +86,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="receiptNameLab1" alignment="0" pref="143" max="32767" attributes="0"/>
-                      <Component id="receiptDOBLab1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="receiptUserLab1" alignment="0" pref="143" max="32767" attributes="0"/>
+                      <Component id="receiptNameLab1" alignment="0" max="32767" attributes="0"/>
                       <Component id="receiptEmailLab1" alignment="0" max="32767" attributes="0"/>
                       <Component id="receiptMobileLab1" alignment="0" max="32767" attributes="0"/>
                       <Component id="receiptRoomIDLab1" max="32767" attributes="0"/>
@@ -96,8 +97,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="receiptUserLab2" max="32767" attributes="0"/>
                       <Component id="receiptNameLab2" max="32767" attributes="0"/>
-                      <Component id="receiptDOBLab2" max="32767" attributes="0"/>
                       <Component id="receiptEmailLab2" max="32767" attributes="0"/>
                       <Component id="receiptMobileLab2" max="32767" attributes="0"/>
                       <Component id="receiptRoomIDLab2" max="32767" attributes="0"/>
@@ -115,13 +116,13 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="receiptNameLab1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="receiptNameLab2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="receiptUserLab1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="receiptUserLab2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="receiptDOBLab1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="receiptDOBLab2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="receiptNameLab1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="receiptNameLab2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -161,20 +162,20 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
+        <Component class="javax.swing.JLabel" name="receiptUserLab1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Username:"/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JLabel" name="receiptNameLab1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Student Name:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="receiptDOBLab1">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Date of Birth: "/>
+            <Property name="text" type="java.lang.String" value="Student Name: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="receiptEmailLab1">
@@ -227,20 +228,20 @@
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
+        <Component class="javax.swing.JLabel" name="receiptUserLab2">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Username"/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JLabel" name="receiptNameLab2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Name"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="receiptDOBLab2">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="DOB"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="receiptEmailLab2">
@@ -257,6 +258,7 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Mobile Number"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="receiptRoomIDLab2">

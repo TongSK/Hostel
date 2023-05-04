@@ -4,17 +4,45 @@
  */
 package com.mycompany.hostelmanagement;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Tan Zhong
  */
 public class Receipt extends javax.swing.JFrame {
 
+    public static String username;
+    public static String roomID;
+    public static String roomType;
+    public static String duration;
+    public static String fee;
+    
     /**
      * Creates new form Receipt
      */
-    public Receipt() {
+    public Receipt(String userName, String roomBooked, String type, String duration, String fee) {
         initComponents();
+        Receipt.username = userName;
+        Receipt.roomID = roomBooked;
+        Receipt.roomType = type;
+        Receipt.duration = duration;
+        Receipt.fee = fee;
+        displayUserDetails();
+        displayReservation();
+        saveBookingRecord();
+        updateHostel();
     }
 
     /**
@@ -29,8 +57,8 @@ public class Receipt extends javax.swing.JFrame {
         receiptLab1 = new javax.swing.JLabel();
         receiptLab2 = new javax.swing.JLabel();
         receiptPanel = new javax.swing.JPanel();
+        receiptUserLab1 = new javax.swing.JLabel();
         receiptNameLab1 = new javax.swing.JLabel();
-        receiptDOBLab1 = new javax.swing.JLabel();
         receiptEmailLab1 = new javax.swing.JLabel();
         receiptMobileLab1 = new javax.swing.JLabel();
         receiptRoomIDLab1 = new javax.swing.JLabel();
@@ -38,8 +66,8 @@ public class Receipt extends javax.swing.JFrame {
         receiptPeriodLab1 = new javax.swing.JLabel();
         receiptPriceLab1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        receiptUserLab2 = new javax.swing.JLabel();
         receiptNameLab2 = new javax.swing.JLabel();
-        receiptDOBLab2 = new javax.swing.JLabel();
         receiptEmailLab2 = new javax.swing.JLabel();
         receiptMobileLab2 = new javax.swing.JLabel();
         receiptRoomIDLab2 = new javax.swing.JLabel();
@@ -49,6 +77,7 @@ public class Receipt extends javax.swing.JFrame {
         receiptOKBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Receipt");
 
         receiptLab1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         receiptLab1.setText("The Room is successfully reversed by you");
@@ -58,11 +87,11 @@ public class Receipt extends javax.swing.JFrame {
 
         receiptPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        receiptNameLab1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        receiptNameLab1.setText("Student Name:");
+        receiptUserLab1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        receiptUserLab1.setText("Username:");
 
-        receiptDOBLab1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        receiptDOBLab1.setText("Date of Birth: ");
+        receiptNameLab1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        receiptNameLab1.setText("Student Name: ");
 
         receiptEmailLab1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         receiptEmailLab1.setText("Email:");
@@ -82,17 +111,18 @@ public class Receipt extends javax.swing.JFrame {
         receiptPriceLab1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         receiptPriceLab1.setText("Monthly Rental:");
 
+        receiptUserLab2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        receiptUserLab2.setText("Username");
+
         receiptNameLab2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         receiptNameLab2.setText("Name");
-
-        receiptDOBLab2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        receiptDOBLab2.setText("DOB");
 
         receiptEmailLab2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         receiptEmailLab2.setText("Email");
 
         receiptMobileLab2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         receiptMobileLab2.setText("Mobile Number");
+        receiptMobileLab2.setToolTipText("");
 
         receiptRoomIDLab2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         receiptRoomIDLab2.setText("MR0101");
@@ -113,8 +143,8 @@ public class Receipt extends javax.swing.JFrame {
             .addGroup(receiptPanelLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(receiptNameLab1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                    .addComponent(receiptDOBLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(receiptUserLab1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(receiptNameLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptEmailLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptMobileLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptRoomIDLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -123,8 +153,8 @@ public class Receipt extends javax.swing.JFrame {
                     .addComponent(receiptPriceLab1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(receiptUserLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptNameLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(receiptDOBLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptEmailLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptMobileLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(receiptRoomIDLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -139,12 +169,12 @@ public class Receipt extends javax.swing.JFrame {
             .addGroup(receiptPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(receiptNameLab1)
-                    .addComponent(receiptNameLab2))
+                    .addComponent(receiptUserLab1)
+                    .addComponent(receiptUserLab2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(receiptDOBLab1)
-                    .addComponent(receiptDOBLab2))
+                    .addComponent(receiptNameLab1)
+                    .addComponent(receiptNameLab2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(receiptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(receiptEmailLab1)
@@ -213,8 +243,94 @@ public class Receipt extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Display the user details who booked the room
+    private void displayUserDetails(){
+        try(BufferedReader br = new BufferedReader(new FileReader("Account.txt"))){
+            String information;
+            while((information = br.readLine()) != null)
+            {
+                String[] data = information.split(",");
+                if(data[0].equals(username))
+                {
+                    receiptUserLab2.setText(data[0]);
+                    receiptNameLab2.setText(data[2]);
+                    receiptMobileLab2.setText(data[3]); 
+                    receiptEmailLab2.setText(data[4]);      
+                }
+            }
+            br.close();
+            
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Account.txt not found!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Something wrong with reading file!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    //Display the details of the room booked
+    private void displayReservation(){
+        receiptRoomIDLab2.setText(roomID);
+        receiptTypeLab2.setText(roomType);
+        receiptPeriodLab2.setText(duration);
+        receiptPriceLab2.setText("RM "+fee);
+    }
+    
+    //Write booking record into Reservation.txt
+    private void saveBookingRecord(){
+        String name = receiptNameLab2.getText();
+        String mobile = receiptMobileLab2.getText();
+        String email = receiptEmailLab2.getText();
+        
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reservation.txt", true)))) {
+            writer.println(roomID+","+roomType+","+duration+","+fee+","+username+","+name+","+mobile+","+email);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Something wrong with writting file!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    //Update the hostel, the room booked by the user
+    //Which means the room is unavailable now, others cannot book this room
+    private void updateHostel(){
+        String availability = "booked";
+
+        try(BufferedReader br = new BufferedReader(new FileReader("Room.txt")))
+        {
+            String information;
+            while((information = br.readLine()) != null)
+            {
+                String[] data = information.split(",");
+                //Search the room that has been booked
+                if (data[0].equals(roomID))
+                {
+                    try {
+                        double price = Double.parseDouble(data[4]);
+                        hostel h = new hostel(data[0],data[1],data[2],data[3],price,availability,username);
+                        ArrayList<String> tmp = h.mainFunc("Room.txt", "w");
+                
+                        PrintWriter w = new PrintWriter("Room.txt");
+                        for(String editData : tmp){
+                            w.println(editData);
+                        }
+                        w.close();
+                    } catch (IOException e) {
+                        JOptionPane.showMessageDialog(this, "Something wrong with updateing file!", "Error Message", JOptionPane.ERROR_MESSAGE);
+
+                    }
+                }
+            }
+        }
+        catch (IOException ioe)
+        {
+            JOptionPane.showMessageDialog(this, "Something wrong with reading file!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
     private void receiptOKBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiptOKBtnActionPerformed
         // TODO add your handling code here:
+        StudentPanel sp = new StudentPanel(username);
+        sp.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_receiptOKBtnActionPerformed
 
     /**
@@ -247,15 +363,13 @@ public class Receipt extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Receipt().setVisible(true);
+                new Receipt(username, roomID, roomType, duration, fee).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel receiptDOBLab1;
-    private javax.swing.JLabel receiptDOBLab2;
     private javax.swing.JLabel receiptEmailLab1;
     private javax.swing.JLabel receiptEmailLab2;
     private javax.swing.JLabel receiptLab1;
@@ -274,5 +388,7 @@ public class Receipt extends javax.swing.JFrame {
     private javax.swing.JLabel receiptRoomIDLab2;
     private javax.swing.JLabel receiptTypeLab1;
     private javax.swing.JLabel receiptTypeLab2;
+    private javax.swing.JLabel receiptUserLab1;
+    private javax.swing.JLabel receiptUserLab2;
     // End of variables declaration//GEN-END:variables
 }
