@@ -1,3 +1,3 @@
-sk,12345
-yy,12345
-tt,123
+sk,12345,Sheng Kit,0123456789,sk@mail.com
+yy,12345,Yu Heng,0123456789,yy@mail.com
+tt,123,Thomas Tan,0123456789,tt@mail.com
