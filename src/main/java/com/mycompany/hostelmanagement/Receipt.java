@@ -46,6 +46,13 @@ public class Receipt extends javax.swing.JFrame {
         saveBookingRecord();
         updateHostel();
     }
+    
+    public Receipt(String userName, String roomBooked){
+        initComponents();
+        Receipt.username = userName;
+        Receipt.roomID = roomBooked;
+        displayReceipt();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -259,6 +266,35 @@ public class Receipt extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Display the history record (receipt)
+    private void displayReceipt(){
+        try(BufferedReader br = new BufferedReader(new FileReader("Reservation.txt"))){
+            String information;
+            while((information = br.readLine()) != null)
+            {
+                String[] data = information.split(",");
+                if(data[0].equals(roomID) && data[4].equals(username))
+                {
+                    receiptUserLab2.setText(data[4]);
+                    receiptNameLab2.setText(data[5]);
+                    receiptEmailLab2.setText(data[7]); 
+                    receiptMobileLab2.setText(data[6]); 
+                    
+                    receiptDateLab2.setText(data[8]);
+                    receiptRoomIDLab2.setText(data[0]);
+                    receiptTypeLab2.setText(data[1]);
+                    receiptPeriodLab2.setText(data[2]);
+                    receiptPriceLab2.setText(data[3]);   
+                }
+            }
+            br.close();
+            
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Reservation.txt not found!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Something wrong with reading file!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
     //Display the user details who booked the room
     private void displayUserDetails(){
