@@ -43,10 +43,13 @@ public class StudentPanel extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 0, 51));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(200, 200, 200));
 
-        SP_profileBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        SP_profileBtn.setBackground(new java.awt.Color(255, 255, 255));
+        SP_profileBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        SP_profileBtn.setForeground(new java.awt.Color(0, 0, 0));
         SP_profileBtn.setText("Profile");
+        SP_profileBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 255), null, new java.awt.Color(204, 51, 255), new java.awt.Color(204, 51, 255)));
         SP_profileBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SP_profileBtnActionPerformed(evt);
@@ -65,7 +68,9 @@ public class StudentPanel extends javax.swing.JFrame {
         SP_lab2.setForeground(new java.awt.Color(0, 0, 0));
         SP_lab2.setText("Hostel Management System");
 
+        SP_logoutBtn.setBackground(new java.awt.Color(35, 134, 255));
         SP_logoutBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        SP_logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
         SP_logoutBtn.setText("Logout");
         SP_logoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,8 +78,12 @@ public class StudentPanel extends javax.swing.JFrame {
             }
         });
 
-        SP_hostelBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        SP_hostelBtn.setBackground(new java.awt.Color(255, 255, 255));
+        SP_hostelBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        SP_hostelBtn.setForeground(new java.awt.Color(0, 0, 0));
         SP_hostelBtn.setText("Hostel");
+        SP_hostelBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(51, 51, 255), new java.awt.Color(204, 51, 255)));
+        SP_hostelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         SP_hostelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SP_hostelBtnActionPerformed(evt);
