@@ -4,7 +4,15 @@
  */
 package com.mycompany.hostelmanagement;
 
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -43,6 +51,9 @@ public class HostelApplication extends javax.swing.JFrame {
         backBtn = new javax.swing.JButton();
         userLab1 = new javax.swing.JLabel();
         userLab2 = new javax.swing.JLabel();
+        searchTxt = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
+        refreshBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hostel");
@@ -101,11 +112,39 @@ public class HostelApplication extends javax.swing.JFrame {
 
         userLab2.setText("User001");
 
+        searchTxt.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        searchTxt.setForeground(new java.awt.Color(204, 204, 204));
+        searchTxt.setText("Room Type");
+        searchTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchTxtFocusLost(evt);
+            }
+        });
+
+        searchBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
+        refreshBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        refreshBtn.setText("Refresh");
+        refreshBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -114,16 +153,22 @@ public class HostelApplication extends javax.swing.JFrame {
                         .addComponent(userLab2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(86, 86, 86)
                         .addComponent(HA_lab1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(270, 270, 270))
+                        .addGap(302, 302, 302))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(401, 401, 401)
+                                .addGap(157, 157, 157)
+                                .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(153, 153, 153)
                                 .addComponent(bookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(32, 32, 32))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchBtn)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,12 +181,18 @@ public class HostelApplication extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(userLab1)
                         .addComponent(userLab2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(refreshBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24))
         );
 
@@ -162,21 +213,31 @@ public class HostelApplication extends javax.swing.JFrame {
 
     //Display the hostel information in a table
     private void displayTable(){
-        hostel h = new hostel(null,null,null,null,0,null,null);
-        ArrayList<String> tmp = h.mainFunc("Room.txt","r");
-        DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
-        table.setRowCount(0);
-        for(int i=0; i<tmp.size(); i++){
-            String rDetails = tmp.get(i);
-            String[] rData = rDetails.split(",");
-            if(rData[5].equals("available") && rData[6].equals("null")){
-                table.addRow(new Object[]{rData[0],rData[2],rData[3],"RM "+rData[4]});
+        try {
+            hostel h = new hostel(null,null,null,null,0,null,null);
+            ArrayList<String> tmp = h.mainFunc("Room.txt","r");
+            if(tmp.isEmpty()){
+                JOptionPane.showMessageDialog(this, "No available room.", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
+            DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
+            table.setRowCount(0);
+            for(int i=0; i<tmp.size(); i++){
+                String rDetails = tmp.get(i);
+                String[] rData = rDetails.split(",");
+                if(rData[5].equals("available") && rData[6].equals("null")){
+                    table.addRow(new Object[]{rData[0],rData[2],rData[3],"RM "+rData[4]});
+                }
+            }
+            HA_table.getColumnModel().getColumn(0).setPreferredWidth(10);
+            HA_table.getColumnModel().getColumn(1).setPreferredWidth(10);
+            HA_table.getColumnModel().getColumn(2).setPreferredWidth(270);
+            HA_table.getColumnModel().getColumn(3).setPreferredWidth(10);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        HA_table.getColumnModel().getColumn(0).setPreferredWidth(10);
-        HA_table.getColumnModel().getColumn(1).setPreferredWidth(10);
-        HA_table.getColumnModel().getColumn(2).setPreferredWidth(270);
-        HA_table.getColumnModel().getColumn(3).setPreferredWidth(10);
+        
+        
+        
     }
     
     //Book room button
@@ -202,6 +263,72 @@ public class HostelApplication extends javax.swing.JFrame {
         sp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
+
+    //Remove placeholder
+    private void searchTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTxtFocusGained
+        // TODO add your handling code here:
+        if(searchTxt.getText().equals("Room Type")){
+            searchTxt.setText("");
+            searchTxt.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_searchTxtFocusGained
+
+    //Display placeholder
+    private void searchTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTxtFocusLost
+        // TODO add your handling code here:
+        if(searchTxt.getText().isEmpty()){
+            searchTxt.setText("Room Type");
+            searchTxt.setForeground(Color.lightGray);
+        }
+    }//GEN-LAST:event_searchTxtFocusLost
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        // TODO add your handling code here:
+        String search_RoomType = searchTxt.getText();
+        
+        if(search_RoomType.equals("Room Type") || search_RoomType.isEmpty()){
+            JOptionPane.showMessageDialog(this, """
+                                                Please enter a room type!
+                                                
+                                                For example:
+                                                1. Small
+                                                2. Medium
+                                                3. Master""", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if(search_RoomType.equals("Small") || search_RoomType.equals("Medium") || search_RoomType.equals("Master")){
+            hostel h = new hostel(null,null,null,null,0,null,null);
+            ArrayList<String> tmp = h.mainFunc("Room.txt","r");
+            DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
+            table.setRowCount(0);
+            for(int i=0; i<tmp.size(); i++){
+                String rDetails = tmp.get(i);
+                String[] rData = rDetails.split(",");
+                if(rData[2].equals(search_RoomType)&&(rData[5].equals("available") && rData[6].equals("null"))){
+                    table.addRow(new Object[]{rData[0],rData[2],rData[3],"RM "+rData[4]});
+                }
+            }
+            if(tmp.isEmpty()){
+                JOptionPane.showMessageDialog(this, "No available room.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        }else{
+            JOptionPane.showMessageDialog(this, """
+                                                Invalid room type!
+                                                
+                                                For example:
+                                                1. Small
+                                                2. Medium
+                                                3. Master
+                                                
+                                                Note: It is case-sensitive, please check your input carefully.""", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
+        // TODO add your handling code here:
+        searchTxt.setText("Room Type");
+        searchTxt.setForeground(Color.lightGray);
+        displayTable();
+    }//GEN-LAST:event_refreshBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,6 +372,9 @@ public class HostelApplication extends javax.swing.JFrame {
     private javax.swing.JButton bookBtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton refreshBtn;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchTxt;
     private javax.swing.JLabel userLab1;
     private javax.swing.JLabel userLab2;
     // End of variables declaration//GEN-END:variables
