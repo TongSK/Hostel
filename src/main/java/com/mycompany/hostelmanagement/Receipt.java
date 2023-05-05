@@ -63,8 +63,7 @@ public class Receipt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        receiptLab1 = new javax.swing.JLabel();
-        receiptLab2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         receiptPanel = new javax.swing.JPanel();
         receiptUserLab1 = new javax.swing.JLabel();
         receiptNameLab1 = new javax.swing.JLabel();
@@ -86,15 +85,13 @@ public class Receipt extends javax.swing.JFrame {
         receiptDateLab1 = new javax.swing.JLabel();
         receiptDateLab2 = new javax.swing.JLabel();
         receiptOKBtn = new javax.swing.JButton();
+        receiptLab1 = new javax.swing.JLabel();
+        receiptLab2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Receipt");
 
-        receiptLab1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        receiptLab1.setText("The Room is successfully reversed by you");
-
-        receiptLab2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        receiptLab2.setText("Please kindly check the information below. Thank you.");
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         receiptPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
@@ -227,6 +224,7 @@ public class Receipt extends javax.swing.JFrame {
                 .addGap(15, 15, 15))
         );
 
+        receiptOKBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         receiptOKBtn.setText("OK");
         receiptOKBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,24 +232,30 @@ public class Receipt extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        receiptLab1.setFont(new java.awt.Font("Segoe UI Semibold", 3, 24)); // NOI18N
+        receiptLab1.setText("The Room is successfully reversed by you");
+
+        receiptLab2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        receiptLab2.setText("Please kindly check the information below. Thank you.");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(receiptLab1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(receiptOKBtn)
                         .addComponent(receiptPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(receiptLab2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
                 .addComponent(receiptLab1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(receiptLab2)
@@ -259,7 +263,18 @@ public class Receipt extends javax.swing.JFrame {
                 .addComponent(receiptPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(receiptOKBtn)
-                .addGap(18, 18, 18))
+                .addGap(25, 25, 25))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -432,6 +447,7 @@ public class Receipt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel receiptDateLab1;
     private javax.swing.JLabel receiptDateLab2;
