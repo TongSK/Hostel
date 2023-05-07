@@ -225,7 +225,7 @@ public class login extends javax.swing.JFrame {
         String uname =UsernameField.getText().trim();
         String password = jPasswordField1.getText().trim();
         Student d = new Student(uname,password);
-        switch (d.isValid()) {
+        switch (d.isValidLogin()) {
             case 0:
                 JOptionPane.showMessageDialog(null,"Incorrect Username or Password!!");
                 break;
