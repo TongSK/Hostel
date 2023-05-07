@@ -4,12 +4,19 @@
  */
 package com.mycompany.hostelmanagement;
 
+import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Asus
  */
 class Admin extends Person{
-
+    
+    final static String ADMINID = "admin";
+    final static String ADMINPASS= "admin123";
+    
     public Admin(String Uname, String pwd, String mail) {
         super(Uname, pwd);
         email = mail;
@@ -31,5 +38,14 @@ class Admin extends Person{
         return pwd;
     }
     
-    
+    public void displyData(ArrayList<String> tmp , JTable tblName){
+
+        DefaultTableModel dft = (DefaultTableModel)tblName.getModel();
+        dft.setRowCount(0);
+        for(int i=0; i<tmp.size(); i++){
+            String rDetails = tmp.get(i);
+            String[] rData = rDetails.split(",");
+            dft.addRow(rData);
+        }
+    }
 }
