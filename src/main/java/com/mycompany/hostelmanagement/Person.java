@@ -6,11 +6,12 @@ package com.mycompany.hostelmanagement;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import com.mycompany.FileHandling.FileHandle;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -29,31 +30,27 @@ import javax.swing.JOptionPane;
         this.pwd = pwd;
     }
 
-    public int isValid(){
+    public int isValidLogin(){
         int valid = 0; 
-        File f = new File("Account.txt");
-        try {
-            Scanner s = new Scanner(f);
-            while(s.hasNextLine()){
-                String data = s.nextLine();
-                String[] datalist = data.split(","); 
-                
-                if(getUname().equals(datalist[0])&& getPwd().equals(datalist[1])){                  
-                    valid = 1;
-                    break;
-                }else if(getUname().equals("admin")&&getPwd().equals("admin123")){               
-                    valid = 2;
-                    break;
-                }else{
-                    valid = 0;
-                    
-                }
+        FileHandle fh = new FileHandle(FileHandle.ACCOUNT);
+        ArrayList<String> tmp = fh.getTmp();
+        String line;
+        String[] data;
+        for(int i =0; i<tmp.size(); i++){
+            line = tmp.get(i);
+            data = line.split(",");
+            if(Uname.equals(data[0]) && pwd.equals(data[1])){
+                valid = 1;
+                break;
+            }else if(Uname.equals(Admin.ADMINID) && pwd.equals(Admin.ADMINPASS)){
+                valid = 2;
+                break;
+            }else{
+                valid = 0;
             }
             
-             
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
         return valid;
         
     }
