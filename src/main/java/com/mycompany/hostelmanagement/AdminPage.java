@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import com.mycompany.FileHandling.FileHandle;
+import com.mycompany.adminFunc.AdminMainFunc;
 
 /**
  *
@@ -509,7 +511,8 @@ public class AdminPage extends javax.swing.JFrame {
 
     private void hiBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hiBtnActionPerformed
         jTabbedPane3.setSelectedIndex(0);
-        displyRDataFunc();
+        AdminMainFunc amf = new AdminMainFunc();
+        amf.displyRoomData(hiTable);
     }//GEN-LAST:event_hiBtnActionPerformed
 
     private void haBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_haBtnActionPerformed
@@ -533,36 +536,40 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_LogOutBtnActionPerformed
 
     private void hiUptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hiUptBtnActionPerformed
-        if(rIDfield.getText().isEmpty() || rNameField.getText().isEmpty() || rTypeField.getText().isEmpty() || desTextArea.getText().isEmpty() || priceField.getText().isEmpty() 
+        
+        if(!rIDfield.isEnabled()){
+            if(rIDfield.getText().isEmpty() || rNameField.getText().isEmpty() || rTypeField.getText().isEmpty() || desTextArea.getText().isEmpty() || priceField.getText().isEmpty() 
                 || availBox.getSelectedItem().equals("<--Availability-->") || ownerField.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this,"Please fill in the form!!","Error Message", JOptionPane.ERROR_MESSAGE);
-        }else{
-            String roomID = rIDfield.getText();
-            String roomName = rNameField.getText();
-            String roomType = rTypeField.getText();
-            String desc = desTextArea.getText();
-            double price = Double.parseDouble(priceField.getText());
-            String availability = (String) availBox.getSelectedItem();
-            String owner = ownerField.getText();
-            try {
-                hostel h = new hostel(roomID,roomName,roomType,desc,price,availability,owner);
-                ArrayList<String> tmp = h.mainFunc("Room.txt", "w");
-                
-                PrintWriter w = new PrintWriter("Room.txt");
-                for(String editData : tmp){
-                    w.println(editData);
-                }
-                w.close();
-                JOptionPane.showMessageDialog(null, "Edit Success");
+                JOptionPane.showMessageDialog(this,"Please fill in the form!!","Error Message", JOptionPane.ERROR_MESSAGE);
+            }else{
+                String roomID = rIDfield.getText();
+                String roomName = rNameField.getText();
+                String roomType = rTypeField.getText();
+                String desc = desTextArea.getText();
+                double price = Double.parseDouble(priceField.getText());
+                String availability = (String) availBox.getSelectedItem();
+                String owner = ownerField.getText();
+                room r = new room(roomID,roomName,roomType,desc,price,availability,owner); 
+                r.setRoomData(r);
+                hostel roomData = r.getRoomData();
+                FileHandle fh = new FileHandle(FileHandle.ROOM);
+                int res = fh.UpdateRoomData(roomData);
                 resetFunc();
-                displyRDataFunc();
-                
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+                if(res == 1){
+                    JOptionPane.showMessageDialog(null, "Update Success");
+                    AdminMainFunc amf = new AdminMainFunc();
+                    amf.displyRoomData(hiTable);
+                }else{
+                    JOptionPane.showMessageDialog(this,"This Room is not exist Please add before edit!!","Error Message", JOptionPane.ERROR_MESSAGE);
+                }
+
+
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Please Select a Room!!");
         }
+        
+        
     }//GEN-LAST:event_hiUptBtnActionPerformed
 
     private void hiTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hiTableMouseClicked
@@ -597,29 +604,20 @@ public class AdminPage extends javax.swing.JFrame {
             double price = Double.parseDouble(priceField.getText());
             String availability = (String) availBox.getSelectedItem();
             String owner = ownerField.getText();
-            try {
-                hostel h = new hostel(roomID,roomName,roomType,desc,price,availability,owner);
-                ArrayList<String> tmp = h.mainFunc("Room.txt", "a");
-                if(tmp.isEmpty()){
-                    JOptionPane.showMessageDialog(this, "This Room ID is invalid please enter again!!","Error Message",JOptionPane.ERROR_MESSAGE);
-                    rIDfield.setText("");
-                }else{
-                    FileWriter w = new FileWriter("Room.txt",true);
-                    for(String data: tmp){
-                        w.write(data+System.lineSeparator());
-                    }
-
-                    w.close();
-                    JOptionPane.showMessageDialog(null, "Add Success");
-                    resetFunc();
-                    displyRDataFunc();
-                }
-                
-                
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+            
+            room r = new room(roomID,roomName,roomType,desc,price,availability,owner);
+            r.setRoomData(r);
+            hostel roomData = r.getRoomData();
+            FileHandle fh = new FileHandle(FileHandle.ROOM);
+            int res = fh.AddRoomData(roomData);
+            if(res == 1){
+                JOptionPane.showMessageDialog(null, "Add Success!!");
+                resetFunc();
+                AdminMainFunc amf = new AdminMainFunc();
+                amf.displyRoomData(hiTable);
+            }else{
+                JOptionPane.showMessageDialog(this, "This Room ID is USED!! Please insert a new Room ID!!","Errror Message", JOptionPane.ERROR_MESSAGE);
+                rIDfield.setText("");
             }
         }
     }//GEN-LAST:event_hiAddBtnActionPerformed
@@ -631,28 +629,22 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_clrBtnActionPerformed
 
     private void hiDelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hiDelBtnActionPerformed
-        hostel h = new hostel(rIDfield.getText(),rNameField.getText(),rTypeField.getText(),desTextArea.getText(),Double.parseDouble(priceField.getText()), (String) availBox.getSelectedItem(),ownerField.getText());
-        ArrayList<String> tmp = h.mainFunc("Room.txt", "d");
-        try {
-            FileWriter w = new FileWriter("Room.txt");
-            w.write("");
-            
-            for(int i =0; i<tmp.size(); i++){
-                if(tmp.get(i).contains(h.getRoomID())){
-                    tmp.remove(i);
-                }
-            }
-            
-            for(String data :tmp){
-                w.write(data);
-                w.write("\n");
-            }
-            w.close();
+        if(!rIDfield.isEnabled()){
+            room r = new room(rIDfield.getText(),rNameField.getText(),rTypeField.getText(),
+                    desTextArea.getText(),Double.parseDouble(priceField.getText()), (String) availBox.getSelectedItem(),ownerField.getText());
+            r.setRoomData(r);
+            hostel roomData = r.getRoomData();
+            FileHandle fh = new FileHandle(FileHandle.ROOM);
+            fh.DeleteRoomData(roomData);
             resetFunc();
-            displyRDataFunc();
-        } catch (IOException ex) {
-            Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Delete Success");
+            AdminMainFunc amf = new AdminMainFunc();
+            amf.displyRoomData(hiTable);
+        }else{
+            JOptionPane.showMessageDialog(this, "Please Select a Room!!");
+
         }
+       
         
     }//GEN-LAST:event_hiDelBtnActionPerformed
 
@@ -666,11 +658,7 @@ public class AdminPage extends javax.swing.JFrame {
         availBox.setSelectedIndex(0);
     }
     
-    public void displyRDataFunc(){
-        hostel h = new hostel(null,null,null,null,0,null,null);
-        ArrayList<String> tmp = h.mainFunc("Room.txt","r");
-        h.displyData(tmp, hiTable);
-    }
+
     /**
      * @param args the command line arguments
      */
