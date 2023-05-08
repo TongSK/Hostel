@@ -4,11 +4,6 @@
  */
 package com.mycompany.hostelmanagement;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.mycompany.FileHandling.FileHandle;
 import java.util.ArrayList;
 
@@ -21,7 +16,7 @@ import java.util.ArrayList;
     protected String Uname;
     protected String pwd;
     protected String studentName;
-    protected String contractNum;
+    protected String contact;
     protected String email; 
     
     
