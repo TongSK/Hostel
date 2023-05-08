@@ -4,6 +4,8 @@
  */
 package com.mycompany.hostelmanagement;
 
+import com.mycompany.FileHandling.FileHandle;
+import com.mycompany.adminFunc.AdminMainFunc;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -353,7 +355,7 @@ public class Receipt extends javax.swing.JFrame {
     }
     
     //Write booking record into Reservation.txt
-    private void saveBookingRecord(){
+    public void saveBookingRecord(){
         String name = receiptNameLab2.getText();
         String mobile = receiptMobileLab2.getText();
         String email = receiptEmailLab2.getText();
@@ -368,7 +370,7 @@ public class Receipt extends javax.swing.JFrame {
     
     //Update the hostel, the room booked by the user
     //Which means the room is unavailable now, others cannot book this room
-    private void updateHostel(){
+    public void updateHostel(){
         String availability = "booked";
 
         try(BufferedReader br = new BufferedReader(new FileReader("Room.txt")))
@@ -380,20 +382,12 @@ public class Receipt extends javax.swing.JFrame {
                 //Search the room that has been booked
                 if (data[0].equals(roomID))
                 {
-                    try {
-                        double price = Double.parseDouble(data[4]);
-                        hostel h = new hostel(data[0],data[1],data[2],data[3],price,availability,username);
-                        ArrayList<String> tmp = h.mainFunc("Room.txt", "w");
-                
-                        PrintWriter w = new PrintWriter("Room.txt");
-                        for(String editData : tmp){
-                            w.println(editData);
-                        }
-                        w.close();
-                    } catch (IOException e) {
-                        JOptionPane.showMessageDialog(this, "Something wrong with updateing file!", "Error Message", JOptionPane.ERROR_MESSAGE);
-
-                    }
+                    double price = Double.parseDouble(data[4]);
+                    room r = new room(data[0],data[1],data[2],data[3],price,availability,username);
+                    r.setRoomData(r);
+                    hostel roomData = r.getRoomData();
+                    FileHandle fh = new FileHandle(FileHandle.ROOM);
+                    fh.UpdateRoomData(roomData);
                 }
             }
         }

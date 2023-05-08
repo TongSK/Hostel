@@ -4,6 +4,7 @@
  */
 package com.mycompany.hostelmanagement;
 
+import com.mycompany.FileHandling.FileHandle;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -58,6 +59,9 @@ public class hostel {
     public String getOwner() {
         return owner;
     }
+
+    public hostel() {
+    }
     
  
     
@@ -82,5 +86,64 @@ public class hostel {
         }
     }
     
+    //Display the hostel information in a table
+    public void displayTable(DefaultTableModel table){
+        try {
+            FileHandle fh = new FileHandle(FileHandle.ROOM);
+            ArrayList<String> tmp = fh.getTmp();
+            if(tmp.isEmpty()){
+                JOptionPane.showMessageDialog(null, "No available room.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            table.setRowCount(0);
+            for(int i=0; i<tmp.size(); i++){
+                String rDetails = tmp.get(i);
+                String[] rData = rDetails.split(",");
+                if(rData[5].equals("available") && rData[6].equals("null")){
+                    table.addRow(new Object[]{rData[0],rData[2],rData[3],"RM "+rData[4]});
+                }
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    //Search room by type
+    public void searchRoom(String roomType, DefaultTableModel table){
+        if(roomType.equals("Room Type") || roomType.isEmpty()){
+            JOptionPane.showMessageDialog(null, """
+                                                Please enter a room type!
+                                                
+                                                For example:
+                                                1. Small
+                                                2. Medium
+                                                3. Master""", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if(roomType.equals("Small") || roomType.equals("Medium") || roomType.equals("Master")){
+            FileHandle fh = new FileHandle(FileHandle.ROOM);
+            ArrayList<String> tmp = fh.getTmp();
+            table.setRowCount(0);
+            for(int i=0; i<tmp.size(); i++){
+                String rDetails = tmp.get(i);
+                String[] rData = rDetails.split(",");
+                if(rData[2].equals(roomType)&&(rData[5].equals("available") && rData[6].equals("null"))){
+                    table.addRow(new Object[]{rData[0],rData[2],rData[3],"RM "+rData[4]});
+                }
+            }
+            if(tmp.isEmpty()){
+                JOptionPane.showMessageDialog(null, "No available room.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        }else{
+            JOptionPane.showMessageDialog(null, """
+                                                Invalid room type!
+                                                
+                                                For example:
+                                                1. Small
+                                                2. Medium
+                                                3. Master
+                                                
+                                                Note: It is case-sensitive, please check your input carefully.""", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
 }

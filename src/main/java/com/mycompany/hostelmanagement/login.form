@@ -204,6 +204,9 @@
                   <Insets value="[2, 7, 2, 6]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="UsernameFieldKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -266,6 +269,9 @@
                   <Dimension value="[1, 16]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jPasswordField1KeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -149,6 +149,7 @@
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="paymentCNTxtFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="paymentCNTxtFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="paymentCNTxtKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="paymentConfirmBtn">
@@ -177,6 +178,7 @@
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="paymentNameTxtFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="paymentNameTxtFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="paymentNameTxtKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="paymentLab1">
@@ -192,12 +194,13 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="123"/>
+            <Property name="text" type="java.lang.String" value="***"/>
             <Property name="toolTipText" type="java.lang.String" value="123"/>
           </Properties>
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="paymentCVVtxtFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="paymentCVVtxtFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="paymentCVVtxtKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="PaymentLab2">
@@ -216,12 +219,13 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="01/24"/>
-            <Property name="toolTipText" type="java.lang.String" value="mm/YY"/>
+            <Property name="text" type="java.lang.String" value="MM/yy"/>
+            <Property name="toolTipText" type="java.lang.String" value="MM/yy"/>
           </Properties>
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="paymentEDTxtFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="paymentEDTxtFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="paymentEDTxtKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="paymentNameLab">

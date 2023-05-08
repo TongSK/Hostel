@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 import java.awt.font.TextAttribute;
 import javax.swing.*;
 
@@ -98,6 +99,11 @@ public class login extends javax.swing.JFrame {
         UsernameField.setCaretColor(new java.awt.Color(0, 0, 0));
         UsernameField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         UsernameField.setMargin(new java.awt.Insets(2, 7, 2, 6));
+        UsernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                UsernameFieldKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -130,6 +136,11 @@ public class login extends javax.swing.JFrame {
         jPasswordField1.setBorder(null);
         jPasswordField1.setCaretColor(new java.awt.Color(0, 0, 0));
         jPasswordField1.setPreferredSize(new java.awt.Dimension(1, 16));
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -265,6 +276,43 @@ public class login extends javax.swing.JFrame {
         rs.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_registerTxtMouseClicked
+
+    //Press Enter in usernameField will jump to the next input field
+    private void UsernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UsernameFieldKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jPasswordField1.requestFocus();
+        }
+    }//GEN-LAST:event_UsernameFieldKeyPressed
+
+    //Press Enter in usernameField will proceed to login
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String uname =UsernameField.getText().trim();
+            String password = jPasswordField1.getText().trim();
+            Student d = new Student(uname,password);
+            switch (d.isValidLogin()) {
+                case 0:
+                    JOptionPane.showMessageDialog(null,"Incorrect Username or Password!!");
+                    break;
+                case 1:
+                    StudentPanel sp = new StudentPanel(uname);
+                    sp.setVisible(true);
+                    this.dispose();
+                    JOptionPane.showMessageDialog(null,"Login Success!!");
+                    break;
+                case 2:
+                    AdminPage ap = new AdminPage();
+                    ap.setVisible(true);
+                    this.dispose();
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+    }//GEN-LAST:event_jPasswordField1KeyPressed
     
     public static void onFocus(JLabel labelname, JTextField fieldName){
         fieldName.addFocusListener(new FocusListener(){

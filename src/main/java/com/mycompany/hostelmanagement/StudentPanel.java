@@ -155,7 +155,7 @@ public class StudentPanel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    //Logout button
     private void SP_logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_logoutBtnActionPerformed
         // TODO add your handling code here:
         login l = new login();
@@ -163,18 +163,18 @@ public class StudentPanel extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_SP_logoutBtnActionPerformed
 
+    //Check Room button
     private void SP_hostelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_hostelBtnActionPerformed
         // TODO add your handling code here:
-        HostelApplication ha = new HostelApplication(username);
-        ha.setVisible(true);
-        this.dispose();
+        Student student = new Student(username);
+        student.checkRoom(username,this);
     }//GEN-LAST:event_SP_hostelBtnActionPerformed
 
+    //Trak Personal Details button
     private void SP_profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_profileBtnActionPerformed
         // TODO add your handling code here:
-        Profile p = new Profile(username);
-        p.setVisible(true);
-        this.dispose();
+        Student student = new Student(username);
+        student.trackPersonalDetails(username,this);
     }//GEN-LAST:event_SP_profileBtnActionPerformed
 
     /**

@@ -5,6 +5,7 @@
 package com.mycompany.hostelmanagement;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -78,6 +79,11 @@ public class Payment extends javax.swing.JFrame {
                 paymentCNTxtFocusLost(evt);
             }
         });
+        paymentCNTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                paymentCNTxtKeyPressed(evt);
+            }
+        });
 
         paymentConfirmBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         paymentConfirmBtn.setText("Confirm");
@@ -100,12 +106,17 @@ public class Payment extends javax.swing.JFrame {
                 paymentNameTxtFocusLost(evt);
             }
         });
+        paymentNameTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                paymentNameTxtKeyPressed(evt);
+            }
+        });
 
         paymentLab1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         paymentLab1.setText("Payment");
 
         paymentCVVtxt.setForeground(new java.awt.Color(204, 204, 204));
-        paymentCVVtxt.setText("123");
+        paymentCVVtxt.setText("***");
         paymentCVVtxt.setToolTipText("123");
         paymentCVVtxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -115,20 +126,30 @@ public class Payment extends javax.swing.JFrame {
                 paymentCVVtxtFocusLost(evt);
             }
         });
+        paymentCVVtxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                paymentCVVtxtKeyPressed(evt);
+            }
+        });
 
         PaymentLab2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         PaymentLab2.setText("Please fill in your card's details to proceed payment");
 
         paymentEDTxt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         paymentEDTxt.setForeground(new java.awt.Color(204, 204, 204));
-        paymentEDTxt.setText("01/24");
-        paymentEDTxt.setToolTipText("mm/YY");
+        paymentEDTxt.setText("MM/yy");
+        paymentEDTxt.setToolTipText("MM/yy");
         paymentEDTxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 paymentEDTxtFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 paymentEDTxtFocusLost(evt);
+            }
+        });
+        paymentEDTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                paymentEDTxtKeyPressed(evt);
             }
         });
 
@@ -278,45 +299,6 @@ public class Payment extends javax.swing.JFrame {
         paymentTotalLab2.setText(fee);
     }
     
-    //Validation for name of cardholder
-    private boolean validateName(String name){
-        //Name cannot be empty
-        if(name.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Cardholder name is required!", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        
-        //Name can only contains alphabets
-        if(!name.matches("[a-zA-Z ]+")){
-            JOptionPane.showMessageDialog(this, "Cardholder name only allows alphabets!", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
-    }
-    
-    //Validation for card
-    private boolean validateCard(String cardNo, String expiryDate, String cvv){
-        //The accepted format of card number is xxxx-xxxx-xxxx-xxxx
-        if (!cardNo.matches("\\d{4}-\\d{4}-\\d{4}-\\d{4}")) {
-            JOptionPane.showMessageDialog(this, "Invalid card number.\nPlease follow this format xxxx-xxxx-xxxx-xxxx.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        //The accepted format of date is MM/yy
-        if (!expiryDate.matches("\\d{2}/\\d{2}")) {
-            JOptionPane.showMessageDialog(this, "Invalid expiry date. Please follow this format mm/YY.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        //The accepted format of cvv is 3 digits
-        if (!cvv.matches("\\d{3}")) {
-            JOptionPane.showMessageDialog(this, "Invalid cvv. CVV is 3 digits.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true;
-    }
-    
     //When the payment button is clicked,
     //It will check all the inputs
     private void paymentConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentConfirmBtnActionPerformed
@@ -326,19 +308,25 @@ public class Payment extends javax.swing.JFrame {
         String expiryDate = paymentEDTxt.getText();
         String cvv = paymentCVVtxt.getText();
         
-        boolean valid_name = validateName(cardHolder);
-        boolean valid_card = validateCard(cardNo, expiryDate, cvv);
-        
-        if(valid_name && valid_card){
+        Student student = new Student(username);
+        boolean paid = student.makePayment(cardHolder,cardNo,expiryDate,cvv);
+        if(paid){
+            
             int response = JOptionPane.showConfirmDialog
-                (this, "Are you sure you want to proceed to payment?", 
+                (this, "Congratulation! The room "+roomID_Selected+" is reserved by you.\nDo you need a receipt for this room reservation?", 
                 "Confirm!",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
             if(response == JOptionPane.YES_OPTION)
             {
                 Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
                 r.setVisible(true);
                 this.dispose();
+            }else{
+                Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
+                StudentPanel sp = new StudentPanel(username);
+                sp.setVisible(true);
+                this.dispose();
             }
+            
         }
     }//GEN-LAST:event_paymentConfirmBtnActionPerformed
 
@@ -388,7 +376,7 @@ public class Payment extends javax.swing.JFrame {
     //Remove placeholder
     private void paymentEDTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentEDTxtFocusGained
         // TODO add your handling code here:
-        if(paymentEDTxt.getText().equals("01/24")){
+        if(paymentEDTxt.getText().equals("MM/yy")){
             paymentEDTxt.setText("");
             paymentEDTxt.setForeground(Color.black);
         }
@@ -397,8 +385,8 @@ public class Payment extends javax.swing.JFrame {
     //Display placeholder
     private void paymentEDTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentEDTxtFocusLost
         // TODO add your handling code here:
-        if(paymentEDTxt.getText().isEmpty()){
-            paymentEDTxt.setText("01/24");
+        if(paymentEDTxt.getText().isEmpty() || paymentEDTxt.getText().equals("MM/yy")){
+            paymentEDTxt.setText("MM/yy");
             paymentEDTxt.setForeground(Color.lightGray);
         }
     }//GEN-LAST:event_paymentEDTxtFocusLost
@@ -406,7 +394,7 @@ public class Payment extends javax.swing.JFrame {
     //Remove placeholder
     private void paymentCVVtxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentCVVtxtFocusGained
         // TODO add your handling code here:
-        if(paymentCVVtxt.getText().equals("123")){
+        if(paymentCVVtxt.getText().equals("***")){
             paymentCVVtxt.setText("");
             paymentCVVtxt.setForeground(Color.black);
         }
@@ -415,11 +403,78 @@ public class Payment extends javax.swing.JFrame {
     //Display placeholder
     private void paymentCVVtxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paymentCVVtxtFocusLost
         // TODO add your handling code here:
-        if(paymentCVVtxt.getText().isEmpty()){
-            paymentCVVtxt.setText("123");
+        if(paymentCVVtxt.getText().isEmpty() || paymentCVVtxt.getText().equals("***")){
+            paymentCVVtxt.setText("***");
             paymentCVVtxt.setForeground(Color.lightGray);
         }
     }//GEN-LAST:event_paymentCVVtxtFocusLost
+
+    //Auto fill in hypen after 4 digits
+    private void paymentCNTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paymentCNTxtKeyPressed
+        // TODO add your handling code here
+        String value=paymentCNTxt.getText();
+        if(value.length()== 4 || value.length()== 9 || value.length()== 14){
+            paymentCNTxt.setText(value+"-"); 
+        }
+
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER || value.length()== 18) {
+            paymentEDTxt.requestFocus(); 
+        }
+           
+    }//GEN-LAST:event_paymentCNTxtKeyPressed
+
+    //Press enter and jump to next input field
+    private void paymentNameTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paymentNameTxtKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            paymentCNTxt.requestFocus();
+        }
+    }//GEN-LAST:event_paymentNameTxtKeyPressed
+
+    //Auto fill in slash after 2 digits
+    private void paymentEDTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paymentEDTxtKeyPressed
+        // TODO add your handling code here:
+        String value=paymentEDTxt.getText();
+        if(value.length()== 2){
+            paymentEDTxt.setText(value+"/"); 
+        }
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER || value.length()== 4) {
+            paymentCVVtxt.requestFocus(); 
+        }
+    }//GEN-LAST:event_paymentEDTxtKeyPressed
+    
+    //Press enter and confirm payment
+    private void paymentCVVtxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paymentCVVtxtKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String cardHolder = paymentNameTxt.getText();
+            String cardNo = paymentCNTxt.getText();
+            String expiryDate = paymentEDTxt.getText();
+            String cvv = paymentCVVtxt.getText();
+
+            Student student = new Student(username);
+            boolean paid = student.makePayment(cardHolder,cardNo,expiryDate,cvv);
+            if(paid){
+
+                int response = JOptionPane.showConfirmDialog
+                    (this, "Congratulation! The room "+roomID_Selected+" is reserved by you.\nDo you need a receipt for this room reservation?", 
+                    "Confirm!",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                if(response == JOptionPane.YES_OPTION)
+                {
+                    Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
+                    r.setVisible(true);
+                    this.dispose();
+                }else{
+                    Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
+                    StudentPanel sp = new StudentPanel(username);
+                    sp.setVisible(true);
+                    this.dispose();
+                }
+
+            }
+        }
+    }//GEN-LAST:event_paymentCVVtxtKeyPressed
 
     /**
      * @param args the command line arguments

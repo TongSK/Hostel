@@ -4,7 +4,9 @@
  */
 package com.mycompany.hostelmanagement;
 
+import com.mycompany.FileHandling.FileHandle;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,7 +31,14 @@ public class HostelApplication extends javax.swing.JFrame {
      */
     public HostelApplication(String userName) {
         initComponents();
-        displayTable();
+//        displayTable();
+        DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
+        HA_table.getColumnModel().getColumn(0).setPreferredWidth(10);
+        HA_table.getColumnModel().getColumn(1).setPreferredWidth(10);
+        HA_table.getColumnModel().getColumn(2).setPreferredWidth(270);
+        HA_table.getColumnModel().getColumn(3).setPreferredWidth(10);
+        hostel h = new hostel();
+        h.displayTable(table);
         HostelApplication.username = userName;
         userLab2.setText(username);
     }
@@ -123,6 +132,11 @@ public class HostelApplication extends javax.swing.JFrame {
                 searchTxtFocusLost(evt);
             }
         });
+        searchTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchTxtKeyPressed(evt);
+            }
+        });
 
         searchBtn.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         searchBtn.setText("Search");
@@ -210,36 +224,7 @@ public class HostelApplication extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    //Display the hostel information in a table
-    private void displayTable(){
-        try {
-            hostel h = new hostel(null,null,null,null,0,null,null);
-            ArrayList<String> tmp = h.mainFunc("Room.txt","r");
-            if(tmp.isEmpty()){
-                JOptionPane.showMessageDialog(this, "No available room.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            }
-            DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
-            table.setRowCount(0);
-            for(int i=0; i<tmp.size(); i++){
-                String rDetails = tmp.get(i);
-                String[] rData = rDetails.split(",");
-                if(rData[5].equals("available") && rData[6].equals("null")){
-                    table.addRow(new Object[]{rData[0],rData[2],rData[3],"RM "+rData[4]});
-                }
-            }
-            HA_table.getColumnModel().getColumn(0).setPreferredWidth(10);
-            HA_table.getColumnModel().getColumn(1).setPreferredWidth(10);
-            HA_table.getColumnModel().getColumn(2).setPreferredWidth(270);
-            HA_table.getColumnModel().getColumn(3).setPreferredWidth(10);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        
-        
-        
-    }
-    
+  
     //Book room button
     private void bookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBtnActionPerformed
         // TODO add your handling code here:
@@ -247,9 +232,9 @@ public class HostelApplication extends javax.swing.JFrame {
             final int column = 0;
             int row = HA_table.getSelectedRow();
             String roomID_Selected = HA_table.getModel().getValueAt(row, column).toString();
-            RoomReservation rr = new RoomReservation(username,roomID_Selected);
-            rr.setVisible(true);
-            this.dispose();
+            Student student = new Student(username);
+            student.reserveRoom(roomID_Selected,this);
+            
         }catch(ArrayIndexOutOfBoundsException e){
             JOptionPane.showMessageDialog(this, "You have to choose 1 room first!", "Error", JOptionPane.ERROR_MESSAGE);
 
@@ -257,6 +242,7 @@ public class HostelApplication extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bookBtnActionPerformed
 
+    //Go back button
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
         StudentPanel sp = new StudentPanel(username);
@@ -282,53 +268,40 @@ public class HostelApplication extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchTxtFocusLost
 
+    //Search Button
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
         String search_RoomType = searchTxt.getText();
-        
-        if(search_RoomType.equals("Room Type") || search_RoomType.isEmpty()){
-            JOptionPane.showMessageDialog(this, """
-                                                Please enter a room type!
-                                                
-                                                For example:
-                                                1. Small
-                                                2. Medium
-                                                3. Master""", "Error", JOptionPane.ERROR_MESSAGE);
-        }else if(search_RoomType.equals("Small") || search_RoomType.equals("Medium") || search_RoomType.equals("Master")){
-            hostel h = new hostel(null,null,null,null,0,null,null);
-            ArrayList<String> tmp = h.mainFunc("Room.txt","r");
-            DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
-            table.setRowCount(0);
-            for(int i=0; i<tmp.size(); i++){
-                String rDetails = tmp.get(i);
-                String[] rData = rDetails.split(",");
-                if(rData[2].equals(search_RoomType)&&(rData[5].equals("available") && rData[6].equals("null"))){
-                    table.addRow(new Object[]{rData[0],rData[2],rData[3],"RM "+rData[4]});
-                }
-            }
-            if(tmp.isEmpty()){
-                JOptionPane.showMessageDialog(this, "No available room.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            }
-            
-        }else{
-            JOptionPane.showMessageDialog(this, """
-                                                Invalid room type!
-                                                
-                                                For example:
-                                                1. Small
-                                                2. Medium
-                                                3. Master
-                                                
-                                                Note: It is case-sensitive, please check your input carefully.""", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        hostel h = new hostel();
+        DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
+        h.searchRoom(search_RoomType, table);
     }//GEN-LAST:event_searchBtnActionPerformed
 
+    //Refresh Button
     private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
         // TODO add your handling code here:
         searchTxt.setText("Room Type");
         searchTxt.setForeground(Color.lightGray);
-        displayTable();
+//        displayTable();
+        DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
+        HA_table.getColumnModel().getColumn(0).setPreferredWidth(10);
+        HA_table.getColumnModel().getColumn(1).setPreferredWidth(10);
+        HA_table.getColumnModel().getColumn(2).setPreferredWidth(270);
+        HA_table.getColumnModel().getColumn(3).setPreferredWidth(10);
+        hostel h = new hostel();
+        h.displayTable(table);
     }//GEN-LAST:event_refreshBtnActionPerformed
+
+    //Press enter and search room
+    private void searchTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTxtKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String search_RoomType = searchTxt.getText();
+            hostel h = new hostel();
+            DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
+            h.searchRoom(search_RoomType, table);
+        }
+    }//GEN-LAST:event_searchTxtKeyPressed
 
     /**
      * @param args the command line arguments

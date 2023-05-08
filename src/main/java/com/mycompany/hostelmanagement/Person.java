@@ -29,6 +29,10 @@ import java.util.ArrayList;
         this.Uname = Uname;
         this.pwd = pwd;
     }
+    
+    public Person(String Uname){
+        this.Uname = Uname;
+    }
 
     public int isValidLogin(){
         int valid = 0; 

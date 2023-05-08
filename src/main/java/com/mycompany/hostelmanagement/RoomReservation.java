@@ -4,6 +4,7 @@
  */
 package com.mycompany.hostelmanagement;
 
+import com.mycompany.FileHandling.FileHandle;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -214,9 +215,10 @@ public class RoomReservation extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Display booking details such as roomID, roomType and price
     private void displayBookingDetails(String roomSelected){
-        hostel h = new hostel(null,null,null,null,0,null,null);
-        ArrayList<String> tmp = h.mainFunc("Room.txt","r");
+        FileHandle fh = new FileHandle(FileHandle.ROOM);
+        ArrayList<String> tmp = fh.getTmp();
         for(int i=0; i<tmp.size(); i++){
             String rDetails = tmp.get(i);
             String[] rData = rDetails.split(",");
@@ -229,6 +231,7 @@ public class RoomReservation extends javax.swing.JFrame {
         }
     }
     
+    //Go back button
     private void rrBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrBackBtnActionPerformed
         // TODO add your handling code here:
         HostelApplication ha = new HostelApplication(username);
@@ -236,6 +239,7 @@ public class RoomReservation extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_rrBackBtnActionPerformed
 
+    //Proceed to payment button
     private void rrPayBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrPayBtnActionPerformed
         // TODO add your handling code here:
         int response = JOptionPane.showConfirmDialog
