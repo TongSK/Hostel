@@ -5,6 +5,7 @@
 package com.mycompany.FileHandling;
 
 
+import com.mycompany.hostelmanagement.Student;
 import com.mycompany.hostelmanagement.hostel;
 import java.io.*;
 import java.util.ArrayList;
@@ -143,7 +144,6 @@ public class FileHandle {
     }
     
     public void DeleteRoomData(hostel roomData){
-
         try{
            
             String roomID = roomData.getRoomID();
@@ -168,6 +168,27 @@ public class FileHandle {
             System.out.println("IO Problem!! Cannot delete!!");
         }
 
+    }
+    
+    public void AddAccount(Student studentData){
+        
+        ArrayList<String> studentList = new ArrayList<>();
+        String uName = studentData.getUname();
+        String cNum = studentData.getContactNum();
+        String email = studentData.getEmail();
+        String pwd = studentData.getPwd();
+        String sName = studentData.getStudentName();
+        studentList.add(uName+","+pwd+","+sName+","+cNum+","+email);
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(fileName,true));
+            for(String data: studentList){
+                bw.write(data+System.lineSeparator());
+            }
+            bw.close();
+        }catch(IOException exp){
+            System.out.println("IO Problem!! CANT ADD ACCOUNT!!");
+        }
+      
     }
     
 }
