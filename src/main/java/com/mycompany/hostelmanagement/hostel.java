@@ -5,15 +5,7 @@
 package com.mycompany.hostelmanagement;
 
 import com.mycompany.FileHandling.FileHandle;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -73,17 +65,6 @@ public class hostel {
         this.price = price;
         this.avail = avail;
         this.owner = owner;
-    }
-    
-    public void displyData(ArrayList<String> tmp , JTable tblName){
-
-        DefaultTableModel dft = (DefaultTableModel)tblName.getModel();
-        dft.setRowCount(0);
-        for(int i=0; i<tmp.size(); i++){
-            String rDetails = tmp.get(i);
-            String[] rData = rDetails.split(",");
-            dft.addRow(rData);
-        }
     }
     
     //Display the hostel information in a table
