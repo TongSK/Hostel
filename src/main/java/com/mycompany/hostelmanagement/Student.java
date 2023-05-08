@@ -4,24 +4,25 @@
  */
 package com.mycompany.hostelmanagement;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import com.mycompany.FileHandling.FileHandle;
 
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Asus
  */
-class Student extends Person {
-
-    public Student(String Uname, String pwd, String sName,  String cNum, String mail) {
+public class Student extends Person {
+    
+    private Student studentData;
+    private ArrayList<String> tmp;   
+    
+    public Student(String Uname, String pwd, String sName,String contNum, String mail) {
         super(Uname, pwd);
         studentName = sName;
-        contractNum = cNum;
+        contact = contNum;
         email = mail;
     }
     public Student(String Uname, String pwd){
@@ -32,27 +33,50 @@ class Student extends Person {
         super(Uname);
     }
     
+    public void setStudentData(Student studentData){
+        this.studentData = studentData;
+    }
+    
+    public Student getStudentData(){
+        return this.studentData;
+    }
+    
+    
     @Override
     public int register(){
-        File f = new File("Account.txt");
-        Scanner s;
         int res = 0;
-        try {
-            s = new Scanner(f);
-            while(s.hasNextLine()){
-            String data = s.nextLine();
-            String[] datalist = data.split(",");
-            if(getUname().equals(datalist[0]) || getUname().equals("admin")){
+        FileHandle fh = new FileHandle(FileHandle.ACCOUNT);
+        tmp = fh.getTmp();
+        String line;
+        String[] data;
+        for(int i = 0; i<tmp.size(); i++){
+            line = tmp.get(i);
+            data = line.split(",");
+            if(Uname.equals(data[0]) || Uname.equals(Admin.ADMINID) ){
                 res = 0;
+                
                 break;
+                
             }else{
-                res = 1;
+
+               res = 4;
+               
+               Validation v = new Validation();
+                if(v.validateEmail(email)==false){
+                    res = 1;
+                    break;
+                }
+                if(v.validatePhone(contact)==false){
+                    res = 2;
+                    break;
+                }
+                if(v.validateName(studentName) == false){
+                    res = 3;
+                    break;
+                }
             }
         }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+ 
         return res;
     }
     
@@ -97,6 +121,8 @@ class Student extends Person {
         sp.dispose();
     }
     
+    
+    
     public String getUname() {
         return Uname;
     }
@@ -109,8 +135,8 @@ class Student extends Person {
         return studentName;
     }
 
-    public String getContractNum() {
-        return contractNum;
+    public String getContactNum() {
+        return contact;
     }
 
     public String getEmail() {
