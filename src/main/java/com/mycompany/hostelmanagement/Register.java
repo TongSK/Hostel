@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.hostelmanagement;
+import com.mycompany.FileHandling.FileHandle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -285,6 +286,8 @@ public class Register extends javax.swing.JFrame {
         String contact = ContactField.getText();
         int res = 0;
         Student st = new Student(uname,pwd,name,contact,email);
+        st.setStudentData(st);
+        
         if(uname.isEmpty()||email.isEmpty()||pwd.isEmpty()||name.isEmpty()||contact.isEmpty()){
             JOptionPane.showMessageDialog(null,"Please fill in the Form!");
             
@@ -292,9 +295,25 @@ public class Register extends javax.swing.JFrame {
             res = st.register();
             if(res == 0){
                 JOptionPane.showMessageDialog(null,"The username is used Please try others name! ");
+                UsernameField.setText("");
             }else if(res == 1){
+                JOptionPane.showMessageDialog(this,"Incorrect Email Address format!!!","Error Message", JOptionPane.ERROR_MESSAGE);
+                EmailField.setText("");
+            }else if(res == 2){
+                JOptionPane.showMessageDialog(this,"Incorrect Phone format!!! Please Follow +60 12345678!!","Error Message", JOptionPane.ERROR_MESSAGE);
+                ContactField.setText("");
+            }else if(res == 3){
+                JOptionPane.showMessageDialog(this,"Name can only contains alphabets!!","Error Message", JOptionPane.ERROR_MESSAGE);
+                ContactField.setText("");
+            }else if(res == 4){
                 JOptionPane.showMessageDialog(null,"Register success!");
+                FileHandle fh = new FileHandle(FileHandle.ACCOUNT);
+                fh.AddAccount(st.getStudentData());
+                login lg = new login();
+                lg.setVisible(true);
+                this.dispose();
             }
+            
         }
        
     }//GEN-LAST:event_signupBtnActionPerformed
@@ -319,18 +338,21 @@ public class Register extends javax.swing.JFrame {
         loginTxt.setFont(f.deriveFont(style));
     }//GEN-LAST:event_loginTxtMouseExited
     public static void onFocus(JTextField fieldName){
-            fieldName.addFocusListener(new FocusListener(){
-                @Override
-                public void focusGained(FocusEvent e) {
+        fieldName.addFocusListener(new FocusListener(){
+            @Override
+
+            public void focusGained(FocusEvent e) {
+                if(!fieldName.getForeground().equals(Color.BLACK)){
                     fieldName.setText("");
                     fieldName.setForeground(Color.BLACK);
-                    
                 }
 
-                @Override
-                public void focusLost(FocusEvent e) {
-                    
-                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
 
             });
         }
