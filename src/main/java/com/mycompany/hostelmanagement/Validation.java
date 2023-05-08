@@ -4,6 +4,7 @@
  */
 package com.mycompany.hostelmanagement;
 
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,6 +12,10 @@ import javax.swing.JOptionPane;
  * @author Tan Zhong
  */
 public class Validation {
+    
+    private final static Pattern EMAILFORMAT = Pattern.compile("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(com)$");
+    private final static Pattern PHONEFORMAT = Pattern.compile("^\\+60\\s\\d{8,}$");
+    
     
     //Validation for name
     public boolean validateName(String name){
@@ -73,6 +78,17 @@ public class Validation {
         }
 
         return true;
+    }
+    
+    
+    //Validation for email
+    public boolean validateEmail(String email){
+        return EMAILFORMAT.matcher(email).matches();
+    }
+    
+    //Validation for phone number
+    public boolean validatePhone(String phoneNum){
+        return PHONEFORMAT.matcher(phoneNum).matches();
     }
     
 }
