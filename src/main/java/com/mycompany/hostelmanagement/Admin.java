@@ -4,10 +4,6 @@
  */
 package com.mycompany.hostelmanagement;
 
-import java.util.ArrayList;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author Asus
@@ -38,14 +34,4 @@ class Admin extends Person{
         return pwd;
     }
     
-    public void displyData(ArrayList<String> tmp , JTable tblName){
-
-        DefaultTableModel dft = (DefaultTableModel)tblName.getModel();
-        dft.setRowCount(0);
-        for(int i=0; i<tmp.size(); i++){
-            String rDetails = tmp.get(i);
-            String[] rData = rDetails.split(",");
-            dft.addRow(rData);
-        }
-    }
 }
