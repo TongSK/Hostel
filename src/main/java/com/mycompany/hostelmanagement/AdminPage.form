@@ -575,7 +575,7 @@
                               <Component id="jScrollPane2" pref="709" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="delBtn" min="-2" max="-2" attributes="0"/>
+                                  <Component id="applDelBtn" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -586,10 +586,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="372" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="delBtn" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="515" max="-2" attributes="0"/>
+                          <EmptySpace pref="30" max="32767" attributes="0"/>
+                          <Component id="applDelBtn" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -605,17 +605,23 @@
                     <Component class="javax.swing.JTable" name="haTable">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="0">
+                          <Table columnCount="7" rowCount="0">
                             <Column editable="false" title="Room ID" type="java.lang.String"/>
                             <Column editable="false" title="Room Type" type="java.lang.String"/>
                             <Column editable="false" title="Month" type="java.lang.String"/>
                             <Column editable="false" title="Price (MYS)" type="java.lang.String"/>
                             <Column editable="false" title="Username" type="java.lang.String"/>
                             <Column editable="false" title="Name" type="java.lang.String"/>
+                            <Column editable="false" title="Start Date" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                               <Title/>
                               <Editor/>
@@ -655,12 +661,12 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JButton" name="delBtn">
+                <Component class="javax.swing.JButton" name="applDelBtn">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Delete"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="delBtnActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="applDelBtnActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -693,18 +699,21 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="nameLbl" max="32767" attributes="0"/>
-                              <Component id="contLbl" pref="61" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="contLbl" pref="61" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="stdContField" min="-2" pref="100" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="rIDFLbl" min="-2" pref="61" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="stdRIDField" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="stdContField" pref="100" max="32767" attributes="0"/>
-                              <Component id="stdNameField" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="75" pref="75" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="rIDFLbl" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                               <Component id="rTypeLbl" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="nameLbl" alignment="1" min="-2" pref="61" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -716,7 +725,7 @@
                                   <Component id="stdDuraField" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="stdRIDField" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="stdNameField" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                                   <Component id="dateLbl" min="-2" pref="61" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -732,15 +741,22 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="298" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="nameLbl" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="stdNameField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="dateLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="stdDateField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="stdRIDField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="rIDFLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="dateLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="stdDateField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="stdNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="nameLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="rIDFLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="stdRIDField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -773,10 +789,10 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="4" rowCount="0">
+                            <Column editable="false" title="ID" type="java.lang.String"/>
                             <Column editable="false" title="Name" type="java.lang.String"/>
                             <Column editable="false" title="Contact" type="java.lang.String"/>
                             <Column editable="false" title="Email" type="java.lang.String"/>
-                            <Column editable="false" title="RoomID" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -835,8 +851,6 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="stdNameField">
                 </Component>
-                <Component class="javax.swing.JTextField" name="stdRIDField">
-                </Component>
                 <Component class="javax.swing.JTextField" name="stdRTypeField">
                 </Component>
                 <Component class="javax.swing.JTextField" name="stdDateField">
@@ -854,6 +868,18 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="stdContField">
+                </Component>
+                <Component class="javax.swing.JComboBox" name="stdRIDField">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="1">
+                        <StringItem index="0" value="Rooms"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
