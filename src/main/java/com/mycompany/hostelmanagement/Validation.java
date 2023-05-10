@@ -15,7 +15,8 @@ public class Validation {
     
     private final static Pattern EMAILFORMAT = Pattern.compile("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(com)$");
     private final static Pattern PHONEFORMAT = Pattern.compile("^\\+60\\s\\d{8,}$");
-    
+    private final static Pattern PRICEFORMAT = Pattern.compile("^\\d+(\\.\\d+)?$");
+    private final static Pattern ROOMIDFORMAT = Pattern.compile("^(S|M|MS)\\d+");
     
     //Validation for name
     public boolean validateName(String name){
@@ -91,4 +92,11 @@ public class Validation {
         return PHONEFORMAT.matcher(phoneNum).matches();
     }
     
+    public boolean validatePrice(String price){
+        return PRICEFORMAT.matcher(price).matches();
+    }
+    
+    public boolean validateRoomID(String roomID){
+        return ROOMIDFORMAT.matcher(roomID).matches();
+    }
 }
