@@ -65,7 +65,7 @@ public class AdminPage extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         haTable = new javax.swing.JTable();
-        delBtn = new javax.swing.JButton();
+        applDelBtn = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         stdRecordTable = new javax.swing.JTable();
@@ -74,13 +74,13 @@ public class AdminPage extends javax.swing.JFrame {
         dateLbl = new javax.swing.JLabel();
         nameLbl = new javax.swing.JLabel();
         stdNameField = new javax.swing.JTextField();
-        stdRIDField = new javax.swing.JTextField();
         stdRTypeField = new javax.swing.JTextField();
         stdDateField = new javax.swing.JTextField();
         duraLbl = new javax.swing.JLabel();
         stdDuraField = new javax.swing.JTextField();
         contLbl = new javax.swing.JLabel();
         stdContField = new javax.swing.JTextField();
+        stdRIDField = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HOSTEL ADMIN");
@@ -383,14 +383,14 @@ public class AdminPage extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Room ID", "Room Type", "Month", "Price (MYS)", "Username", "Name"
+                "Room ID", "Room Type", "Month", "Price (MYS)", "Username", "Name", "Start Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -409,12 +409,13 @@ public class AdminPage extends javax.swing.JFrame {
             haTable.getColumnModel().getColumn(3).setResizable(false);
             haTable.getColumnModel().getColumn(4).setResizable(false);
             haTable.getColumnModel().getColumn(5).setResizable(false);
+            haTable.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        delBtn.setText("Delete");
-        delBtn.addActionListener(new java.awt.event.ActionListener() {
+        applDelBtn.setText("Delete");
+        applDelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                delBtnActionPerformed(evt);
+                applDelBtnActionPerformed(evt);
             }
         });
 
@@ -428,17 +429,17 @@ public class AdminPage extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(delBtn)))
+                        .addComponent(applDelBtn)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(delBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(applDelBtn)
+                .addGap(16, 16, 16))
         );
 
         jTabbedPane3.addTab("HOSTEL", jPanel6);
@@ -451,7 +452,7 @@ public class AdminPage extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Contact", "Email", "RoomID"
+                "ID", "Name", "Contact", "Email"
             }
         ) {
             Class[] types = new Class [] {
@@ -494,6 +495,8 @@ public class AdminPage extends javax.swing.JFrame {
 
         contLbl.setText("Contact");
 
+        stdRIDField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rooms" }));
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -505,16 +508,18 @@ public class AdminPage extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(nameLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(contLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(stdContField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(stdNameField))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(contLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(stdContField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(rIDFLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(stdRIDField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(75, 75, 75)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rIDFLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rTypeLbl, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(rTypeLbl, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(nameLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
@@ -524,7 +529,7 @@ public class AdminPage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(stdDuraField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(stdRIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(stdNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65)
                         .addComponent(dateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -536,15 +541,19 @@ public class AdminPage extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameLbl)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(stdNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dateLbl)
-                        .addComponent(stdDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(stdRIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(rIDFLbl)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dateLbl)
+                            .addComponent(stdDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stdNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameLbl)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rIDFLbl)
+                            .addComponent(stdRIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -625,11 +634,14 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_LogOutBtnActionPerformed
 
     private void hiUptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hiUptBtnActionPerformed
-        
+        Validation v = new Validation();
         if(!rIDfield.isEnabled()){
             if(rIDfield.getText().isEmpty() || rNameField.getText().isEmpty() || rTypeField.getSelectedIndex() == 0 || desTextArea.getText().isEmpty() || priceField.getText().isEmpty() 
                 || availBox.getSelectedIndex() == 0 || ownerField.getText().isEmpty()){
                 JOptionPane.showMessageDialog(this,"Please fill in the form!!","Error Message", JOptionPane.ERROR_MESSAGE);
+            }else if(v.validatePrice(priceField.getText())==false){
+                JOptionPane.showMessageDialog(this,"Please enter the price!!","Error Message", JOptionPane.ERROR_MESSAGE);
+                priceField.setText("");
             }else{
                 String roomID = rIDfield.getText();
                 String roomName = rNameField.getText();
@@ -639,7 +651,7 @@ public class AdminPage extends javax.swing.JFrame {
                 String availability = (String) availBox.getSelectedItem();
                 String owner = ownerField.getText();
                 
-                room r = new room(roomID,roomName,roomType,desc,price,availability,owner); 
+                room r = new room(roomID,roomName,roomType,desc,price,availability.toLowerCase(),owner); 
                 r.setRoomData(r);
                 hostel roomData = r.getRoomData();
                 FileHandle fh = new FileHandle(FileHandle.ROOM);
@@ -650,6 +662,11 @@ public class AdminPage extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Update Success");
                     AdminMainFunc amf = new AdminMainFunc(FileHandle.ROOM);
                     amf.displyRoomData(hiTable);
+                    availBox.setEnabled(true);
+                    ownerField.setEnabled(true);
+                }else if(res == 2){
+                    JOptionPane.showMessageDialog(null, "Invalid User!!! This USER is not exist in our system!!", "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
+                    rIDfield.setEnabled(true);
                 }else{
                     JOptionPane.showMessageDialog(this,"This Room is not exist Please add before edit!!","Error Message", JOptionPane.ERROR_MESSAGE);
                 }
@@ -670,10 +687,21 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_hiTableMouseClicked
 
     private void hiAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hiAddBtnActionPerformed
+        Validation v= new Validation();
         if(rIDfield.getText().isEmpty() || rNameField.getText().isEmpty() || rTypeField.getSelectedIndex() == 0 || desTextArea.getText().isEmpty() || priceField.getText().isEmpty() 
                 || availBox.getSelectedIndex() == 0 || ownerField.getText().isEmpty()){
             JOptionPane.showMessageDialog(this,"Please fill in the form!!","Error Message", JOptionPane.ERROR_MESSAGE);
+        }else if(v.validatePrice(priceField.getText())==false){
+            JOptionPane.showMessageDialog(this,"Please enter the price!!","Error Message", JOptionPane.ERROR_MESSAGE);
+            priceField.setText("");
+        }else if(v.validateRoomID(rIDfield.getText().toUpperCase())==false){
+            JOptionPane.showMessageDialog(this,"ROOM ID only accept IDs start with S, M, MS!!1","Error Message", JOptionPane.ERROR_MESSAGE);
+            rIDfield.setText("");
+        }else if(availBox.getSelectedIndex() == 2){
+            JOptionPane.showMessageDialog(this,"You are only able to add an available room!!!","Error Message", JOptionPane.ERROR_MESSAGE);
+
         }else{
+       
             if(!rIDfield.isEnabled()){
                 JOptionPane.showMessageDialog(this, "Please Clear the Form before you add a new Data!");
             }else{
@@ -685,7 +713,7 @@ public class AdminPage extends javax.swing.JFrame {
                 String availability = (String) availBox.getSelectedItem();
                 String owner = ownerField.getText();
 
-                room r = new room(roomID,roomName,roomType,desc,price,availability,owner);
+                room r = new room(roomID,roomName,roomType,desc,price,availability.toLowerCase(),owner);
                 r.setRoomData(r);
                 hostel roomData = r.getRoomData();
                 FileHandle fh = new FileHandle(FileHandle.ROOM);
@@ -695,7 +723,13 @@ public class AdminPage extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Add Success!!");
                     resetFunc();
                     AdminMainFunc amf = new AdminMainFunc(FileHandle.ROOM);
-                    amf.displyRoomData(hiTable);
+                    amf.displyRoomData(hiTable); 
+                    ownerField.setEnabled(true);
+                    
+                }else if(res == -1){
+                    JOptionPane.showMessageDialog(this, "This User is invalid!! Please insert a valid User!!","Errror Message", JOptionPane.ERROR_MESSAGE);
+                    ownerField.setText("");
+                    ownerField.setEnabled(true);
                 }else{
                     JOptionPane.showMessageDialog(this, "This Room ID is USED!! Please insert a new Room ID!!","Errror Message", JOptionPane.ERROR_MESSAGE);
                     rIDfield.setText("");
@@ -707,42 +741,63 @@ public class AdminPage extends javax.swing.JFrame {
     
     private void clrBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clrBtnActionPerformed
         rIDfield.setEnabled(true);
+        availBox.setEnabled(true);
+        ownerField.setEnabled(true);
         resetFunc();
 
     }//GEN-LAST:event_clrBtnActionPerformed
 
     private void hiDelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hiDelBtnActionPerformed
-        if(!rIDfield.isEnabled()){
-            room r = new room(rIDfield.getText(),rNameField.getText(),(String)rTypeField.getSelectedItem(),
-                    desTextArea.getText(),Double.parseDouble(priceField.getText()), (String) availBox.getSelectedItem(),ownerField.getText());
-            r.setRoomData(r);
-            hostel roomData = r.getRoomData();
-            FileHandle fh = new FileHandle(FileHandle.ROOM);
-            fh.DeleteRoomData(roomData);
-            resetFunc();
-            rIDfield.setEnabled(true);
-            JOptionPane.showMessageDialog(null, "Delete Success");
-            AdminMainFunc amf = new AdminMainFunc(FileHandle.ROOM);
-            amf.displyRoomData(hiTable);
-        }else{
-            JOptionPane.showMessageDialog(this, "Please Select a Room!!");
+        
+        int respone =  JOptionPane.showConfirmDialog(this , "Are you sure you want to delete this application ?", "Confirm", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        }
-       
+         if(respone == JOptionPane.YES_OPTION){
+            if(!rIDfield.isEnabled()){
+                room r = new room(rIDfield.getText(),rNameField.getText(),(String)rTypeField.getSelectedItem(),
+                        desTextArea.getText(),Double.parseDouble(priceField.getText()), (String) availBox.getSelectedItem(),ownerField.getText());
+                r.setRoomData(r);
+                hostel roomData = r.getRoomData();
+                FileHandle fh = new FileHandle(FileHandle.ROOM);
+                fh.DeleteRoomData(roomData);
+                resetFunc();
+                rIDfield.setEnabled(true);
+                rTypeField.setEnabled(true);
+                JOptionPane.showMessageDialog(null, "Delete Success");
+                AdminMainFunc amf = new AdminMainFunc(FileHandle.ROOM);
+                amf.displyRoomData(hiTable);
+            }else{
+                JOptionPane.showMessageDialog(this, "Please Select a Room!!");
+                
+            }
+         }else{
+             JOptionPane.showMessageDialog(this, "Process cancel!!"); 
+             resetFunc();
+         }
         
     }//GEN-LAST:event_hiDelBtnActionPerformed
 
     private void availBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availBoxActionPerformed
         if(availBox.getSelectedIndex() == 1){
-            ownerField.setText("Null");
+            ownerField.setText("null");
+            ownerField.setEnabled(false); 
         }else{
             ownerField.setText("");
+            ownerField.setEnabled(true); 
         }
     }//GEN-LAST:event_availBoxActionPerformed
 
-    private void delBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_delBtnActionPerformed
+    private void applDelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applDelBtnActionPerformed
+        int respone =  JOptionPane.showConfirmDialog(this , "Are you sure you want to delete this application ?", "Confirm", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(respone == JOptionPane.YES_OPTION){
+            AdminMainFunc amf = new AdminMainFunc(FileHandle.ROOM);
+            amf.endApplication(haTable);
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Process cancel!!"); 
+        }
+        AdminMainFunc amf =  new AdminMainFunc(FileHandle.RESERVATION);
+        amf.displyApplicData(haTable); 
+    }//GEN-LAST:event_applDelBtnActionPerformed
 
     private void stdRecordTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stdRecordTableMouseClicked
         AdminMainFunc amf = new AdminMainFunc(FileHandle.RESERVATION);
@@ -797,12 +852,12 @@ public class AdminPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogOutBtn;
+    private javax.swing.JButton applDelBtn;
     private javax.swing.JComboBox<String> availBox;
     private javax.swing.JLabel availLabel;
     private javax.swing.JButton clrBtn;
     private javax.swing.JLabel contLbl;
     private javax.swing.JLabel dateLbl;
-    private javax.swing.JButton delBtn;
     private javax.swing.JLabel desLabel;
     private javax.swing.JTextArea desTextArea;
     private javax.swing.JLabel duraLbl;
@@ -842,7 +897,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTextField stdDateField;
     private javax.swing.JTextField stdDuraField;
     private javax.swing.JTextField stdNameField;
-    private javax.swing.JTextField stdRIDField;
+    private javax.swing.JComboBox<String> stdRIDField;
     private javax.swing.JTextField stdRTypeField;
     private javax.swing.JTable stdRecordTable;
     private javax.swing.JLabel wlcLabel;
