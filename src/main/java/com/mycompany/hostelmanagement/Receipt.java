@@ -5,19 +5,16 @@
 package com.mycompany.hostelmanagement;
 
 import com.mycompany.FileHandling.FileHandle;
-import com.mycompany.adminFunc.AdminMainFunc;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,21 +24,37 @@ import javax.swing.JOptionPane;
 public class Receipt extends javax.swing.JFrame {
 
     public static String username;
+    private String name;
+    private String email;
+    private String mobile;
+    
     public static String roomID;
     public static String roomType;
     public static String duration;
     public static String fee;
     
+    public static Student student;
+    public static room r;
+    
     /**
      * Creates new form Receipt
+     * @param student
+     * @param r
+     * @param duration
      */
-    public Receipt(String userName, String roomBooked, String type, String duration, String fee) {
+    public Receipt(Student student, room r, String duration) {
         initComponents();
-        Receipt.username = userName;
-        Receipt.roomID = roomBooked;
-        Receipt.roomType = type;
+        Receipt.student = student;
+        Receipt.username = student.getUname();
+        name = student.getStudentName();
+        email = student.getEmail();
+        mobile = student.getContactNum();
+        
+        Receipt.roomID = r.getRoomID();
+        Receipt.roomType = r.getRoomType();
         Receipt.duration = duration;
-        Receipt.fee = fee;
+        Receipt.fee = Double.toString(r.getPrice());
+        
         displayDate();
         displayUserDetails();
         displayReservation();
@@ -49,9 +62,14 @@ public class Receipt extends javax.swing.JFrame {
         updateHostel();
     }
     
-    public Receipt(String userName, String roomBooked){
+    public Receipt(Student student, String roomBooked){
         initComponents();
-        Receipt.username = userName;
+        Receipt.student = student;
+        Receipt.username = student.getUname();
+        name = student.getStudentName();
+        email = student.getEmail();
+        mobile = student.getContactNum();
+        
         Receipt.roomID = roomBooked;
         displayReceipt();
     }
@@ -315,35 +333,23 @@ public class Receipt extends javax.swing.JFrame {
     
     //Display the user details who booked the room
     private void displayUserDetails(){
-        try(BufferedReader br = new BufferedReader(new FileReader("Account.txt"))){
-            String information;
-            while((information = br.readLine()) != null)
-            {
-                String[] data = information.split(",");
-                if(data[0].equals(username))
-                {
-                    receiptUserLab2.setText(data[0]);
-                    receiptNameLab2.setText(data[2]);
-                    receiptMobileLab2.setText(data[3]); 
-                    receiptEmailLab2.setText(data[4]);      
-                }
-            }
-            br.close();
-            
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "Account.txt not found!", "Error Message", JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Something wrong with reading file!", "Error Message", JOptionPane.ERROR_MESSAGE);
-        }
+        receiptUserLab2.setText(username);
+        receiptNameLab2.setText(name);
+        receiptMobileLab2.setText(email); 
+        receiptEmailLab2.setText(mobile);      
+
     }
     
     //Display the date of room booked
     private void displayDate(){
-        GregorianCalendar gc = new GregorianCalendar();
-        int year = gc.get(GregorianCalendar.YEAR);
-        int month = (gc.get(GregorianCalendar.MONTH)+1);
-        int day = gc.get(GregorianCalendar.DATE);
-        receiptDateLab2.setText(day+"-"+month+"-"+year);
+//        GregorianCalendar gc = new GregorianCalendar();
+//        int year = gc.get(GregorianCalendar.YEAR);
+//        int month = (gc.get(GregorianCalendar.MONTH)+1);
+//        int day = gc.get(GregorianCalendar.DATE);
+        LocalDate current =  LocalDate.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String currDate =format.format(current);
+        receiptDateLab2.setText(currDate);
     }
     
     //Display the details of the room booked
@@ -356,13 +362,10 @@ public class Receipt extends javax.swing.JFrame {
     
     //Write booking record into Reservation.txt
     public void saveBookingRecord(){
-        String name = receiptNameLab2.getText();
-        String mobile = receiptMobileLab2.getText();
-        String email = receiptEmailLab2.getText();
         String date = receiptDateLab2.getText();
-        
+        String endDate = "null";
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Reservation.txt", true)))) {
-            writer.println(roomID+","+roomType+","+duration+","+fee+","+username+","+name+","+mobile+","+email+","+date);
+            writer.println(roomID+","+roomType+","+duration+","+fee+","+username+","+name+","+mobile+","+email+","+date+","+endDate);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Something wrong with writting file!", "Error Message", JOptionPane.ERROR_MESSAGE);
         }
@@ -400,7 +403,7 @@ public class Receipt extends javax.swing.JFrame {
     
     private void receiptOKBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiptOKBtnActionPerformed
         // TODO add your handling code here:
-        StudentPanel sp = new StudentPanel(username);
+        StudentPanel sp = new StudentPanel(student);
         sp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_receiptOKBtnActionPerformed
@@ -435,7 +438,7 @@ public class Receipt extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Receipt(username, roomID, roomType, duration, fee).setVisible(true);
+                new Receipt(student, r, duration).setVisible(true);
             }
         });
     }

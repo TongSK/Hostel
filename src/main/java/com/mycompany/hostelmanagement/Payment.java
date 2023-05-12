@@ -14,22 +14,27 @@ import javax.swing.JOptionPane;
  */
 public class Payment extends javax.swing.JFrame {
 
-    public static String roomID_Selected;
-    public static String roomType_Selected;
     public static String fee;
     public static String length_renting;
     public static String username;
     
+    public static Student student;
+    public static room r;
+    
     /**
      * Creates new form Payment
+     * @param length_renting
+     * @param r
+     * @param student
      */
-    public Payment(String roomID_Selected, String roomType_Selected, String fee, String length_renting, String userName) {
+    public Payment(Student student, room r, String length_renting) {
         initComponents();
-        Payment.roomID_Selected = roomID_Selected;
-        Payment.roomType_Selected = roomType_Selected;
-        Payment.fee = fee;
+        
         Payment.length_renting = length_renting;
-        Payment.username = userName;
+        Payment.r = r;   
+        Payment.fee = Double.toString(r.getPrice());
+        Payment.student = student;
+        username = student.getUname();
         userLab2.setText(username);
         displayFee();
     }
@@ -307,22 +312,21 @@ public class Payment extends javax.swing.JFrame {
         String cardNo = paymentCNTxt.getText();
         String expiryDate = paymentEDTxt.getText();
         String cvv = paymentCVVtxt.getText();
-        
-        Student student = new Student(username);
+
         boolean paid = student.makePayment(cardHolder,cardNo,expiryDate,cvv);
         if(paid){
             
             int response = JOptionPane.showConfirmDialog
-                (this, "Congratulation! The room "+roomID_Selected+" is reserved by you.\nDo you need a receipt for this room reservation?", 
+                (this, "Congratulation! The room "+r.getRoomID()+" is reserved by you.\nDo you need a receipt for this room reservation?", 
                 "Confirm!",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
             if(response == JOptionPane.YES_OPTION)
             {
-                Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
-                r.setVisible(true);
+                Receipt re = new Receipt(student, r, length_renting);
+                re.setVisible(true);
                 this.dispose();
             }else{
-                Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
-                StudentPanel sp = new StudentPanel(username);
+                Receipt re = new Receipt(student, r, length_renting);
+                StudentPanel sp = new StudentPanel(student);
                 sp.setVisible(true);
                 this.dispose();
             }
@@ -332,7 +336,7 @@ public class Payment extends javax.swing.JFrame {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        RoomReservation rr = new RoomReservation(username, roomID_Selected);
+        RoomReservation rr = new RoomReservation(student, r);
         rr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
@@ -453,21 +457,20 @@ public class Payment extends javax.swing.JFrame {
             String expiryDate = paymentEDTxt.getText();
             String cvv = paymentCVVtxt.getText();
 
-            Student student = new Student(username);
             boolean paid = student.makePayment(cardHolder,cardNo,expiryDate,cvv);
             if(paid){
 
                 int response = JOptionPane.showConfirmDialog
-                    (this, "Congratulation! The room "+roomID_Selected+" is reserved by you.\nDo you need a receipt for this room reservation?", 
+                    (this, "Congratulation! The room "+r.getRoomID()+" is reserved by you.\nDo you need a receipt for this room reservation?", 
                     "Confirm!",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                 if(response == JOptionPane.YES_OPTION)
                 {
-                    Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
-                    r.setVisible(true);
+                    Receipt re = new Receipt(student, r, length_renting);
+                    re.setVisible(true);
                     this.dispose();
                 }else{
-                    Receipt r = new Receipt(username, roomID_Selected, roomType_Selected, length_renting, fee);
-                    StudentPanel sp = new StudentPanel(username);
+                    Receipt re = new Receipt(student, r, length_renting);
+                    StudentPanel sp = new StudentPanel(student);
                     sp.setVisible(true);
                     this.dispose();
                 }
@@ -506,7 +509,7 @@ public class Payment extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Payment(roomID_Selected, roomType_Selected, fee, length_renting, username).setVisible(true);
+                new Payment(student, r, length_renting).setVisible(true);
             }
         });
     }

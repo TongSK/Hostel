@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.hostelmanagement;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,15 +16,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Profile extends javax.swing.JFrame {
 
-    public static String username;
+    public static Student student;
+    private final String user;
+    private final String name;
+    private final String mobile;
+    private final String email;
+    
     /**
      * Creates new form Profile
+     * @param student
      */
-    public Profile(String userName) {
+    public Profile(Student student) {
         initComponents();
-        Profile.username = userName;
+        user = student.getUname();
+        name = student.getStudentName();
+        mobile = student.getContactNum();
+        email = student.getEmail();
         displayUserDetails();
         displayReservationHistory();
+        Profile.student = student;
     }
 
     /**
@@ -247,29 +256,15 @@ public class Profile extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
     //Display the user details who booked the room
     private void displayUserDetails(){
-        try(BufferedReader br = new BufferedReader(new FileReader("Account.txt"))){
-            String information;
-            while((information = br.readLine()) != null)
-            {
-                String[] data = information.split(",");
-                if(data[0].equals(username))
-                {
-                    profileUserLab2.setText(data[0]);
-                    profileNameLab2.setText(data[2]);
-                    profileMobileLab2.setText(data[3]); 
-                    profileEmailLab2.setText(data[4]);      
-                }
-            }
-            br.close();
-            
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "Account.txt not found!", "Error Message", JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Something wrong with reading file!", "Error Message", JOptionPane.ERROR_MESSAGE);
-        }
+        profileUserLab2.setText(user);
+        profileNameLab2.setText(name);
+        profileMobileLab2.setText(mobile); 
+        profileEmailLab2.setText(email); 
     }
+    
     
     private void displayReservationHistory(){
         try(BufferedReader br = new BufferedReader(new FileReader("Reservation.txt"))){
@@ -280,7 +275,7 @@ public class Profile extends javax.swing.JFrame {
             while((information = br.readLine()) != null)
             {
                 String[] data = information.split(",");
-                if(data[4].equals(username))
+                if(data[4].equals(user))
                 {
                     table.addRow(new Object[]{data[0],data[1],data[2],"RM "+data[3],data[8]});
                 }
@@ -296,7 +291,7 @@ public class Profile extends javax.swing.JFrame {
     
     private void profileBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBackBtnActionPerformed
         // TODO add your handling code here:
-        StudentPanel sp = new StudentPanel(username);
+        StudentPanel sp = new StudentPanel(student);
         sp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_profileBackBtnActionPerformed
@@ -308,7 +303,7 @@ public class Profile extends javax.swing.JFrame {
             int row = profileHistoryTable.getSelectedRow();
             String roomID_Selected = profileHistoryTable.getModel().getValueAt(row, column).toString();
 
-            Receipt r = new Receipt(username,roomID_Selected);
+            Receipt r = new Receipt(student,roomID_Selected);
             r.setVisible(true);
             this.dispose();
         }catch(ArrayIndexOutOfBoundsException e){
@@ -346,7 +341,7 @@ public class Profile extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Profile(username).setVisible(true);
+                new Profile(student).setVisible(true);
             }
         });
     }

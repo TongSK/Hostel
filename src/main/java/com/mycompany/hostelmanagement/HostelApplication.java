@@ -4,17 +4,8 @@
  */
 package com.mycompany.hostelmanagement;
 
-import com.mycompany.FileHandling.FileHandle;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.temporal.Temporal;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,11 +16,13 @@ import javax.swing.table.DefaultTableModel;
 public class HostelApplication extends javax.swing.JFrame {
 
     public static String username;
+    public static Student student;
     
     /**
      * Creates new form HostelApplication
+     * @param student
      */
-    public HostelApplication(String userName) {
+    public HostelApplication(Student student) {
         initComponents();
 //        displayTable();
         DefaultTableModel table = (DefaultTableModel)HA_table.getModel();
@@ -39,7 +32,8 @@ public class HostelApplication extends javax.swing.JFrame {
         HA_table.getColumnModel().getColumn(3).setPreferredWidth(10);
         hostel h = new hostel();
         h.displayTable(table);
-        HostelApplication.username = userName;
+        HostelApplication.student = student;
+        username = student.getUname();
         userLab2.setText(username);
     }
 
@@ -232,8 +226,7 @@ public class HostelApplication extends javax.swing.JFrame {
             final int column = 0;
             int row = HA_table.getSelectedRow();
             String roomID_Selected = HA_table.getModel().getValueAt(row, column).toString();
-            Student student = new Student(username);
-            student.reserveRoom(roomID_Selected,this);
+            student.reserveRoom(roomID_Selected,student,this);
             
         }catch(ArrayIndexOutOfBoundsException e){
             JOptionPane.showMessageDialog(this, "You have to choose 1 room first!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -245,7 +238,7 @@ public class HostelApplication extends javax.swing.JFrame {
     //Go back button
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        StudentPanel sp = new StudentPanel(username);
+        StudentPanel sp = new StudentPanel(student);
         sp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
@@ -333,7 +326,7 @@ public class HostelApplication extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HostelApplication(username).setVisible(true);
+                new HostelApplication(student).setVisible(true);
             }
         });
     }

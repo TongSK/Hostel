@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.hostelmanagement;
-
-import com.mycompany.FileHandling.FileHandle;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,16 +12,29 @@ import javax.swing.JOptionPane;
 public class RoomReservation extends javax.swing.JFrame {
     
     public static String username;
+    public static Student student;
+    public static room r;
+    
     public static String roomID;
+    String roomType;
+    String roomPrice;
     /**
      * Creates new form RoomReservation
+     * @param student
+     * @param r
      */
-    public RoomReservation(String userName, String roomID) {
+    public RoomReservation(Student student, room r) {
         initComponents();
-        displayBookingDetails(roomID);
-        RoomReservation.username = userName;
-        RoomReservation.roomID = roomID;
+        
+//        RoomReservation.username = userName;
+        RoomReservation.student = student;
+        RoomReservation.r = r;
+        RoomReservation.roomID = r.getRoomID();
+        roomType = r.getRoomType();
+        roomPrice = Double.toString(r.getPrice());
+        username = student.getUname();
         userLab2.setText(username);
+        displayBookingDetails();
     }
     
     
@@ -216,25 +226,17 @@ public class RoomReservation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     //Display booking details such as roomID, roomType and price
-    private void displayBookingDetails(String roomSelected){
-        FileHandle fh = new FileHandle(FileHandle.ROOM);
-        ArrayList<String> tmp = fh.getTmp();
-        for(int i=0; i<tmp.size(); i++){
-            String rDetails = tmp.get(i);
-            String[] rData = rDetails.split(",");
-            
-            if(rData[0].equals(roomSelected)){
-                rrRoomIDLab2.setText(rData[0]);
-                rrRoomTypeLab2.setText(rData[2]);
-                rrPriceLab2.setText("RM "+rData[4]);
-            }
-        }
+    private void displayBookingDetails(){
+        rrRoomIDLab2.setText(roomID);
+        rrRoomTypeLab2.setText(roomType);
+        rrPriceLab2.setText("RM "+roomPrice);
+
     }
     
     //Go back button
     private void rrBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rrBackBtnActionPerformed
         // TODO add your handling code here:
-        HostelApplication ha = new HostelApplication(username);
+        HostelApplication ha = new HostelApplication(student);
         ha.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_rrBackBtnActionPerformed
@@ -247,12 +249,9 @@ public class RoomReservation extends javax.swing.JFrame {
                 "Confirm!",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(response == JOptionPane.YES_OPTION)
         {
-            String roomID = rrRoomIDLab2.getText();
-            String roomType = rrRoomTypeLab2.getText();
-            String price = rrPriceLab2.getText().substring(3);
             String duration = rrCombo1.getSelectedItem().toString();  
             
-            Payment p = new Payment(roomID, roomType, price, duration, username);
+            Payment p = new Payment(student, r, duration);
             p.setVisible(true);
             this.dispose();
         }
@@ -287,8 +286,9 @@ public class RoomReservation extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new RoomReservation(username, roomID).setVisible(true);
+                new RoomReservation(student, r).setVisible(true);
             }
         });
     }
