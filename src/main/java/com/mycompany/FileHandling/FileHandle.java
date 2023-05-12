@@ -8,6 +8,8 @@ package com.mycompany.FileHandling;
 import com.mycompany.hostelmanagement.Student;
 import com.mycompany.hostelmanagement.hostel;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -102,13 +104,6 @@ public class FileHandle {
                 }else{
                     roomList.add(line);
                     
-                }
-                //Edit Reservation txt when owner  change
-                if(roomID.equals(data[0]) && !owner.equals(data[6])){
-                    System.out.println("Changing new Owner!!");
-                    res = changeOwner(roomID,owner,data[6]);
-                }else{
-                    System.out.println("Dont have new Owner!!");
                 }
                 
             }
@@ -293,14 +288,14 @@ public class FileHandle {
     }
     
     
-    public ArrayList<String> fetchReservationDetail(String owner){
+    public ArrayList<String> fetchReservationDetail(String roomID){
         String line;
         String data[];
         ArrayList<String> roomDetail = new ArrayList<>(); 
         for(int i =0; i<tmp.size();i++){
             line = tmp.get(i);
             data = line.split(",");
-            if(owner.equals(data[4])){
+            if(roomID.equals(data[0])){
                 roomDetail.add(line);
             }
         }
@@ -343,11 +338,15 @@ public class FileHandle {
         ArrayList<String> reserTmp = new ArrayList<>();
         String line;
         String[] data;
+        
+        LocalDate current =  LocalDate.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String currDate =format.format(current);
         for(int i = 0; i<reserData.size();i++){
             line = reserData.get(i);
             data = line.split(",");
             if(roomID.equals(data[0]) && owner.equals(data[4])){
-                reserTmp.add(data[0]+","+data[1]+","+data[2]+","+data[3]+","+data[4]+","+data[5]+","+data[6]+","+data[7]+","+data[8]+","+"end");
+                reserTmp.add(data[0]+","+data[1]+","+data[2]+","+data[3]+","+data[4]+","+data[5]+","+data[6]+","+data[7]+","+data[8]+","+currDate);
             }else{
                 reserTmp.add(line);
             }
