@@ -11,12 +11,17 @@ package com.mycompany.hostelmanagement;
 public class StudentPanel extends javax.swing.JFrame {
 
     public static String username;
+    public static Student student;
     /**
      * Creates new form StudentPanel
+     * @param student
      */
-    public StudentPanel(String userName) {
-        StudentPanel.username = userName;
+    public StudentPanel(Student student) {
+//        StudentPanel.username = userName;
         initComponents();
+        
+        StudentPanel.student = student;
+        username = student.getUname();
         userLab2.setText(username); 
     }
 
@@ -166,15 +171,14 @@ public class StudentPanel extends javax.swing.JFrame {
     //Check Room button
     private void SP_hostelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_hostelBtnActionPerformed
         // TODO add your handling code here:
-        Student student = new Student(username);
-        student.checkRoom(username,this);
+        student.checkRoom(student,this);
     }//GEN-LAST:event_SP_hostelBtnActionPerformed
 
     //Trak Personal Details button
     private void SP_profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SP_profileBtnActionPerformed
         // TODO add your handling code here:
-        Student student = new Student(username);
-        student.trackPersonalDetails(username,this);
+//        Student student = new Student(username);
+        student.trackPersonalDetails(student,this);
     }//GEN-LAST:event_SP_profileBtnActionPerformed
 
     /**
@@ -207,7 +211,7 @@ public class StudentPanel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StudentPanel(username).setVisible(true);
+                new StudentPanel(student).setVisible(true);
             }
         });
     }

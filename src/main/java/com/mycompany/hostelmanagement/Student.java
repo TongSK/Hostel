@@ -7,7 +7,6 @@ package com.mycompany.hostelmanagement;
 import com.mycompany.FileHandling.FileHandle;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -81,17 +80,34 @@ public class Student extends Person {
     }
     
     //Method for Student to check available rooms
-    public void checkRoom(String username, StudentPanel sp){
-        HostelApplication ha = new HostelApplication(username);
+    public void checkRoom(Student student, StudentPanel sp){
+        HostelApplication ha = new HostelApplication(student);
         ha.setVisible(true);
         sp.dispose();
     }
     
+    public String[] getRoom(String roomID){
+        FileHandle fh = new FileHandle(FileHandle.ROOM);
+        ArrayList<String> tmp = fh.getTmp();
+        for(int i=0; i<tmp.size(); i++){
+            String rDetails = tmp.get(i);
+            String[] data = rDetails.split(",");
+            
+            if(data[0].equals(roomID)){
+                return data;
+            }
+        }
+        return null;
+    }
+    
     //Method for Student to book a room
-    public void reserveRoom(String roomID, HostelApplication HA){
-        RoomReservation rr = new RoomReservation(getUname(),roomID);
+    public void reserveRoom(String roomID, Student student, HostelApplication HA){
+        String[] roomInfo = getRoom(roomID);
+        room r = new room(roomInfo[0],roomInfo[1],roomInfo[2],roomInfo[3],Double.parseDouble(roomInfo[4]),roomInfo[5],roomInfo[6]);
+        RoomReservation rr = new RoomReservation(student,r);
         rr.setVisible(true);
         HA.dispose();
+        
     }
     
     //Method for Student to make payment for booking
@@ -115,14 +131,33 @@ public class Student extends Person {
     }
     
     //Method for Student to check their profile
-    public void trackPersonalDetails(String username, StudentPanel sp){
-        Profile p = new Profile(username);
+    public void trackPersonalDetails(Student student, StudentPanel sp){
+        Profile p = new Profile(student);
         p.setVisible(true);
         sp.dispose();
     }
     
-    
-    
+    public String[] getUserInfo(String username){
+        try {
+            FileHandle fh = new FileHandle(FileHandle.ACCOUNT);
+            ArrayList<String> tmp = fh.getTmp();
+            if(tmp.isEmpty()){
+                JOptionPane.showMessageDialog(null, "User.txt is empty.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            for(int i=0; i<tmp.size(); i++){
+                String rDetails = tmp.get(i);
+                String[] data = rDetails.split(",");
+                if(data[0].equals(username)){
+                    return data;
+                }
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public String getUname() {
         return Uname;
     }
