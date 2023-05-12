@@ -106,6 +106,17 @@ public class FileHandle {
                     
                 }
                 
+                if(!data[6].equals("null")){
+                   //admin Edit Reservation txt when owner  change
+                    if(roomID.equals(data[0]) && !owner.equals(data[6])){
+                        System.out.println("Changing new Owner!!");
+                        res = changeOwner(roomID,owner,data[6]);
+                    }else{
+                        System.out.println("Dont have new Owner!!");
+                    } 
+                }
+                
+                
             }
             if(res == 1){
                 PrintWriter w = new PrintWriter(fileName);
@@ -241,7 +252,7 @@ public class FileHandle {
                     roomDetail = reserData.get(i);
                     data = roomDetail.split(",");
                     if(roomID.equals(data[0]) && oldOwner.equals(data[4])){ 
-                        newReseData.add(data[0]+","+data[1]+","+data[2]+","+data[3]+","+newOwner+","+accData[2]+","+accData[3]+","+accData[4]+","+data[8]);
+                        newReseData.add(data[0]+","+data[1]+","+data[2]+","+data[3]+","+newOwner+","+accData[2]+","+accData[3]+","+accData[4]+","+data[8]+","+data[9]);
                         res = 1;
                     }else{
                         newReseData.add(roomDetail);
